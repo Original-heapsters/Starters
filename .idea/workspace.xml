@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a39893f-dac1-48d2-a3d2-62aff5191f76" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/HPEHaven/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/SentimentAnalysis.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/GettyImages/GettyImages.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/getty.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AuxClasses/HPEHaven/HPEHaven.py" afterPath="$PROJECT_DIR$/AuxClasses/HPEHaven/HPEHaven.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/AuxClasses/Keyloader.py" afterPath="$PROJECT_DIR$/AuxClasses/KeyLoader.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AuxClasses/HPEHaven/__init__.py" afterPath="$PROJECT_DIR$/AuxClasses/GettyImages/__init__.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,18 +20,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="14" column="6" lean-forward="false" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-              <folding>
-                <element signature="e#0#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -60,7 +46,7 @@
         <entry file="file://$PROJECT_DIR$/AuxClasses/HPEHaven/HPEHaven.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
-              <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+              <caret line="18" column="40" lean-forward="false" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -68,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SentimentAnalysis.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SentimentAnalysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AuxClasses/SentimentAnalysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="663">
-              <caret line="39" column="38" lean-forward="true" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+              <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -103,9 +89,31 @@
       <file leaf-file-name="keys.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/keys.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+            <state relative-caret-position="272">
+              <caret line="16" column="68" lean-forward="false" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GettyImages.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AuxClasses/GettyImages/GettyImages.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getty.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AuxClasses/getty.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1768">
+              <caret line="19" column="40" lean-forward="true" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+              <folding>
+                <element signature="e#272#283#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -114,7 +122,7 @@
         <entry file="file://$PROJECT_DIR$/AuxClasses/KeyLoader.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -143,13 +151,16 @@
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/templates/index.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/keys.json" />
         <option value="$PROJECT_DIR$/AuxClasses/__init__.py" />
         <option value="$PROJECT_DIR$/AuxClasses/Keyloader.py" />
         <option value="$PROJECT_DIR$/AuxClasses/HPEHaven/SentimentAnalysis.py" />
         <option value="$PROJECT_DIR$/AuxClasses/HPEHaven/__init__.py" />
         <option value="$PROJECT_DIR$/AuxClasses/SentimentAnalysis.py" />
         <option value="$PROJECT_DIR$/AuxClasses/HPEHaven/HPEHaven.py" />
+        <option value="$PROJECT_DIR$/keys.json" />
+        <option value="$PROJECT_DIR$/AuxClasses/GettyImages.py" />
+        <option value="$PROJECT_DIR$/AuxClasses/getty.py" />
+        <option value="$PROJECT_DIR$/AuxClasses/GettyImages/GettyImages.py" />
       </list>
     </option>
   </component>
@@ -262,6 +273,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Starters" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Starters" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AuxClasses" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GettyImages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -273,10 +302,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\git\Starters\AuxClasses\GettyImages" />
       <recent name="G:\git\Starters\AuxClasses" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.HPEHaven">
+  <component name="RunManager" selected="Python.GettyImages">
     <configuration default="false" name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -341,6 +371,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Starters" />
       <option name="SCRIPT_NAME" value="G:\git\Starters\AuxClasses\SentimentAnalysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GettyImages" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AuxClasses/GettyImages" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Starters" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AuxClasses/GettyImages/GettyImages.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -479,18 +526,20 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.app" />
       <item index="1" class="java.lang.String" itemvalue="Python.Keyloader" />
       <item index="2" class="java.lang.String" itemvalue="Python.HPEHaven" />
       <item index="3" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
+      <item index="4" class="java.lang.String" itemvalue="Python.GettyImages" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.HPEHaven" />
-        <item index="1" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Keyloader" />
-        <item index="3" class="java.lang.String" itemvalue="Python.app" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.GettyImages" />
+        <item index="1" class="java.lang.String" itemvalue="Python.HPEHaven" />
+        <item index="2" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Keyloader" />
+        <item index="4" class="java.lang.String" itemvalue="Python.app" />
       </list>
     </recent_temporary>
   </component>
@@ -610,14 +659,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/keys.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AuxClasses/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -637,19 +678,9 @@
     <entry file="file://$PROJECT_DIR$/AuxClasses/KeyLoader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AuxClasses/HPEHaven/HPEHaven.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -657,10 +688,46 @@
     <entry file="file://$PROJECT_DIR$/AuxClasses/SentimentAnalysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
-          <caret line="39" column="38" lean-forward="true" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+          <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/keys.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="68" lean-forward="false" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AuxClasses/HPEHaven/HPEHaven.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="40" lean-forward="false" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AuxClasses/getty.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1768">
+          <caret line="19" column="40" lean-forward="true" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+          <folding>
+            <element signature="e#272#283#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AuxClasses/GettyImages/GettyImages.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
