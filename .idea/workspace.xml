@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a39893f-dac1-48d2-a3d2-62aff5191f76" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/Clarifai/Clarifai.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/Clarifai/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OAuth/OAuthStart/app.py" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,13 +17,13 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="oauth.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/oauth.py">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="52" column="12" lean-forward="false" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
+            <state relative-caret-position="238">
+              <caret line="14" column="41" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
               <folding>
-                <element signature="e#0#46#0" expanded="true" />
+                <element signature="e#0#59#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Clarifai.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Clarifai.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AuxClasses/Clarifai/Clarifai.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+              <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -147,7 +145,6 @@
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/Models.py" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/OAuthHelpers.py" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/oauth.py" />
-        <option value="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/templates/index.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/AuxClasses/__init__.py" />
@@ -161,6 +158,7 @@
         <option value="$PROJECT_DIR$/AuxClasses/GettyImages/GettyImages.py" />
         <option value="$PROJECT_DIR$/keys.json" />
         <option value="$PROJECT_DIR$/AuxClasses/Clarifai/Clarifai.py" />
+        <option value="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
       </list>
     </option>
   </component>
@@ -324,24 +322,7 @@
       <recent name="G:\git\Starters\AuxClasses" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Clarifai">
-    <configuration default="false" name="Keyloader" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/AuxClasses" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Starters" />
-      <option name="SCRIPT_NAME" value="G:\git\Starters\AuxClasses\KeyLoader.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.app">
     <configuration default="false" name="HPEHaven" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -406,6 +387,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Starters" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AuxClasses/Clarifai/Clarifai.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/OAuth/OAuthStart" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Starters" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -545,19 +543,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.Keyloader" />
-      <item index="1" class="java.lang.String" itemvalue="Python.HPEHaven" />
-      <item index="2" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
-      <item index="3" class="java.lang.String" itemvalue="Python.GettyImages" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Clarifai" />
+      <item index="0" class="java.lang.String" itemvalue="Python.HPEHaven" />
+      <item index="1" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
+      <item index="2" class="java.lang.String" itemvalue="Python.GettyImages" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Clarifai" />
+      <item index="4" class="java.lang.String" itemvalue="Python.app" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.Clarifai" />
-        <item index="1" class="java.lang.String" itemvalue="Python.GettyImages" />
-        <item index="2" class="java.lang.String" itemvalue="Python.HPEHaven" />
-        <item index="3" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Keyloader" />
+        <item index="0" class="java.lang.String" itemvalue="Python.app" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Clarifai" />
+        <item index="2" class="java.lang.String" itemvalue="Python.GettyImages" />
+        <item index="3" class="java.lang.String" itemvalue="Python.HPEHaven" />
+        <item index="4" class="java.lang.String" itemvalue="Python.SentimentAnalysis" />
       </list>
     </recent_temporary>
   </component>
@@ -610,7 +608,7 @@
         <state relative-caret-position="238">
           <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
           <folding>
-            <element signature="e#0#59#0" expanded="false" />
+            <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -637,16 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="6" lean-forward="false" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#59#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -750,9 +738,19 @@
     <entry file="file://$PROJECT_DIR$/AuxClasses/Clarifai/Clarifai.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="41" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>

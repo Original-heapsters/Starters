@@ -3,15 +3,20 @@ from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
+from AuxClasses import KeyLoader
 from oauth import OAuthHelpers
+
+keys = KeyLoader.KeyLoader('../../keys.json')
+
+fbID, fbSecret = keys.getCredentials('facebook')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['OAUTH_CREDENTIALS'] = {
     'facebook': {
-        'id': 'GARBAGE DAY77',
-        'secret': 'IT REALLY ISNT BUTTER!8675309759'
+        'id': fbID,
+        'secret': fbSecret
     },
     'twitter': {
         'id': '3RzWQclolxWZIMq5LJqzRZPTl',
