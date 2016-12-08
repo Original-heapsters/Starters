@@ -3,42 +3,71 @@ from havenondemand.hodresponseparser import *
 
 class SentimentAnalysis(object):
 
-    def __init__(self, hodClient=None, parser=None):
+    def __init__(self, hodClient=None, parser=None, results={}):
         self.hodClient = hodClient
         self.parser = parser
+        self.results = results
 
     def sentimentRequestCompleted(self, response, **context):
-        resp = ""
+        sentiment_dict = {}
+        resp = "<br>"
         payloadObj = self.parser.parse_payload(response)
         if payloadObj is None:
             errorObj = self.parser.get_last_error()
+            sentiment_dict['errors'] = ''
             for err in errorObj.errors:
-                resp += "Error code: %d \nReason: %s \nDetails: %s\n" % (err.error, err.reason, err.detail)
+                sentiment_dict['errors'] += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
+                resp += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
         else:
             app = context["hodapp"]
             if app == HODApps.ANALYZE_SENTIMENT:
                 positives = payloadObj["positive"]
-                resp += "Positive:\n"
+                resp += "Positive:<br>"
+                sentiment_dict['positives'] = ''
                 for pos in positives:
-                    resp += "Sentiment: " + pos["sentiment"] + "\n"
+                    pos_text = ''
+                    pos_text += "Sentiment: " + pos["sentiment"] + "<br>"
+                    resp += "Sentiment: " + pos["sentiment"] + "<br>"
                     if pos.get('topic'):
-                        resp += "Topic: " + pos["topic"] + "\n"
-                    resp += "Score: " + "%f " % (pos["score"]) + "\n"
+                        pos_text += "Topic: " + pos["topic"] + "<br>"
+                        resp += "Topic: " + pos["topic"] + "<br>"
+                    pos_text += "Score: " + "%f " % (pos["score"]) + "<br>"
+                    resp += "Score: " + "%f " % (pos["score"]) + "<br>"
                     if 'documentIndex' in pos:
-                        resp += "Doc: " + str(pos["documentIndex"]) + "\n"
+                        pos_text += "Doc: " + str(pos["documentIndex"]) + "<br>"
+                        resp += "Doc: " + str(pos["documentIndex"]) + "<br>"
+                    sentiment_dict['positives'] += pos_text
                 negatives = payloadObj["negative"]
-                resp += "Negative:\n"
+                resp += "Negative:<br>"
+                sentiment_dict['negatives'] = ''
                 for neg in negatives:
-                    resp += "Sentiment: " + neg["sentiment"] + "\n"
+                    neg_text = ''
+                    neg_text += "Sentiment: " + neg["sentiment"] + "<br>"
+                    resp += "Sentiment: " + neg["sentiment"] + "<br>"
                     if neg.get('topic'):
-                        resp += "Topic: " + neg["topic"] + "\n"
-                    resp += "Score: " + "%f " % (neg["score"]) + "\n"
+                        neg_text += "Topic: " + neg["topic"] + "<br>"
+                        resp += "Topic: " + neg["topic"] + "<br>"
+                    neg_text += "Score: " + "%f " % (neg["score"]) + "<br>"
+                    resp += "Score: " + "%f " % (neg["score"]) + "<br>"
                     if 'documentIndex' in neg:
-                        resp += "Doc: " + str(neg["documentIndex"]) + "\n"
+                        neg_text += "Doc: " + str(neg["documentIndex"]) + "<br>"
+                        resp += "Doc: " + str(neg["documentIndex"]) + "<br>"
+                    sentiment_dict['negatives'] += neg_text
                 aggregate = payloadObj["aggregate"]
-                resp += "Aggregate:\n"
-                resp += "Score: " + "%f " % (aggregate["score"]) + "\n"
+                sentiment_dict['overall'] = "Aggregate:<br>"
+                resp += "Aggregate:<br>"
+                sentiment_dict['overall'] += "Score: " + "%f " % (aggregate["score"]) + "<br>"
+                resp += "Score: " + "%f " % (aggregate["score"]) + "<br>"
+                sentiment_dict['overall'] += aggregate["sentiment"] + "<br>"
+                if aggregate["sentiment"] == 'neutral':
+                    sentiment_dict['overall'] += ':|'
+                elif aggregate["sentiment"] == 'positive':
+                        sentiment_dict['overall'] += ':)'
+                elif aggregate["sentiment"] == 'negative':
+                    sentiment_dict['overall'] += '>:('
+
                 resp += aggregate["sentiment"]
+        self.results = sentiment_dict
         print(resp)
 
 

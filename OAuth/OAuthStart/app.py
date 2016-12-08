@@ -1,14 +1,19 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
 from AuxClasses import KeyLoader
 from oauth import OAuthHelpers
+from AuxClasses import SentimentAnalysis
+from havenondemand.hodclient import *
+from havenondemand.hodresponseparser import *
+import re
 
 keys = KeyLoader.KeyLoader('../../keys.json')
 
 fbID, fbSecret = keys.getCredentials('facebook')
+hpeID, hpeSecret = keys.getCredentials('hpe_haven')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
@@ -46,6 +51,23 @@ def load_user(id):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/sentimental', methods=['GET', 'POST'])
+def sentimental():
+        if request.method == "POST":
+            print('posting')
+            sentiments = None
+            hodClient = HODClient(hpeID)
+            parser = HODResponseParser()
+            sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
+            text_to_analyze = request.form['sentiment_text']
+            # split text by punctionation
+            text = re.split('[?.,!]', text_to_analyze)
+            sentiments.doPost(text, 'eng')
+
+            return render_template('sentimental.html', sentiments=sentiments)
+        else:
+            return render_template('sentimental.html')
 
 @app.route('/logout')
 def logout():
