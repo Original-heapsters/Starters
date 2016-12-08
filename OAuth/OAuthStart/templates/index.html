@@ -6,8 +6,10 @@
     {% endfor %}
     {% if current_user.is_authenticated %}
         <h2>Hi, {{ current_user.name }}!</h2>
-        <li><a href="{{ url_for('sentimental') }}">Sentiment Analysis</a></li>
+        <img src="/static/friendly_wave.jpg" alt="Whaddup cuz">
+        <h2><a href="{{ url_for('sentimental') }}">Sentiment Analysis</a></h2>
     {% else %}
         <h2>I don't know you!</h2>
+        <img src="/static/suspicious_man.jpg" alt="I DONT KNOW YOU">
     {% endif %}
 {% endblock %}
