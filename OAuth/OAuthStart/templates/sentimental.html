@@ -1,43 +1,48 @@
 {% extends "layout.html" %}
 {% block body %}
-    <h2>Analyze the sentiment of...</h2>
-    <form action="{{ url_for('sentimental') }}" id="sentiment_form" method="Post">
-      <textarea name="sentiment_text" form="sentiment_form">Enter text here...</textarea>
-      <input type="submit" value="submit">
-    </form>
+    {% if current_user.is_authenticated %}
+        <h2>Analyze the sentiment of...</h2>
+        <form action="{{ url_for('sentimental') }}" id="sentiment_form" method="Post">
+          <textarea name="sentiment_text" form="sentiment_form">Enter text here...</textarea>
+          <input type="submit" value="submit">
+        </form>
 
-    {% if sentiments %}
-        {% if sentiments.results['errors'] %}
+        {% if sentiments %}
+            {% if sentiments.results['errors'] %}
+                <hr>
+                <h2>Errors :(</h2>
+                {% for error in sentiments.results['errors'] %}
+                    <h3>{{ error }}</h3>
+                {% endfor %}
+            {% endif %}
             <hr>
-            <h2>Errors :(</h2>
-            {% for error in sentiments.results['errors'] %}
-                <h3>{{ error }}</h3>
-            {% endfor %}
-        {% endif %}
-        <hr>
-        <h2>Overall sentiment</h2>
-        <h3>{{ sentiments.results['overall'] | safe }}</h3>
-        {% if 'neutral' in sentiments.results['overall'] %}
-            <img src="/static/bored.jpg" alt="Is that all youve got?">
-        {% endif %}
-        {% if 'positive' in sentiments.results['overall'] %}
-            <img src="/static/positive.png" alt="Oh Yiissss!">
-        {% endif %}
-        {% if 'negative' in sentiments.results['overall'] %}
-            <img src="/static/negative.jpg" alt="Oh Noez!">
-        {% endif %}
-        {% if sentiments.results['positives'] %}
-            <hr>
-            <h2>Positives :)</h2>
-            {{ sentiments.results['positives'] | safe }}
-            <hr>
-        {% endif %}
-        {% if sentiments.results['negatives'] %}
-            <hr>
-            <h2>Negatives >:0</h2>
-            {{ sentiments.results['negatives'] | safe }}
+            <h2>Overall sentiment</h2>
+            <h3>{{ sentiments.results['overall'] | safe }}</h3>
+            {% if 'neutral' in sentiments.results['overall'] %}
+                <img src="/static/bored.jpg" height="500px" alt="Is that all youve got?">
+            {% endif %}
+            {% if 'positive' in sentiments.results['overall'] %}
+                <img src="/static/positive.png" height="500px" alt="Oh Yiissss!">
+            {% endif %}
+            {% if 'negative' in sentiments.results['overall'] %}
+                <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
+            {% endif %}
+            {% if sentiments.results['positives'] %}
+                <hr>
+                <h2>Positives :)</h2>
+                {{ sentiments.results['positives'] | safe }}
+                <hr>
+            {% endif %}
+            {% if sentiments.results['negatives'] %}
+                <hr>
+                <h2>Negatives >:0</h2>
+                {{ sentiments.results['negatives'] | safe }}
+            {% endif %}
+        {% else %}
+            <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
         {% endif %}
     {% else %}
-        <img src="/static/psychiatrist.jpg" alt="But how does it make you feeel?">
+        <h1><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Log in fool!</a></h1>
+        <img src="/static/loginplz.jpg" height="500px" alt="LOGINNNN">
     {% endif %}
 {% endblock %}

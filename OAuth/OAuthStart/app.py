@@ -88,9 +88,9 @@ def clarifai():
         print (data)
         concepts = data['concepts']
 
-        tag_list = []
+        tag_list = ''
         for tag in concepts:
-            tag_list.append(tag['name'])
+            tag_list += tag['name'] + ', '
 
         return render_template('clarifai.html', original_image=request.form['image_url'],tags=tag_list)
     else:

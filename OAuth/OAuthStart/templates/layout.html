@@ -1,24 +1,31 @@
 <!doctype html>
-<title>Flask HACKZ</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>Flask HACKZ</h1>
-  <div class=metanav>
-      <h2>
-  {% if not current_user.is_authenticated %}
-    <a href="{{ url_for('oauth_authorize', provider='facebook') }}">Login with Facebook</a>
-  {% else %}
-    <a href="{{ url_for('logout') }}">log out</a>
-      <a href="{{ url_for('index') }}">Go home Billy.</a>
-  {% endif %}
-      </h2>
-  </div>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-    <body>
-    <center>
-  {% block body %}{% endblock %}
-    </center>
-    </body>
-</div>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  </head>
+  <body>
+    <a class="buttonhome" href="{{ url_for('index') }}">Flask HACKZ</a>
+
+    <div class=page>
+      <div >
+        <ul class="topnav">
+        {% if not current_user.is_authenticated %}
+          <li class="right" ><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Login with Facebook</a></li>
+        {% else %}
+          <li><a href="{{ url_for('sentimental') }}">Sentiment Analysis</a></li>
+          <li><a href="{{ url_for('clarifai') }}">Image Analysis</a></li>
+          <li class="right" ><a  href="{{ url_for('logout') }}">Log out</a></li>
+        {% endif %}
+        </ul>
+      </div>
+      {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+      {% endfor %}
+        <center>
+      {% block body %}{% endblock %}
+        </center>
+      </div>
+  </body>
+</html>
