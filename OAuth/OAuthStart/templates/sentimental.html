@@ -1,19 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if current_user.is_authenticated %}
-        <h2>Analyze the sentiment of...</h2>
+        <h2>Tell me how you REALLY feel...</h2>
         <form action="{{ url_for('sentimental') }}" id="sentiment_form" method="Post">
-          <textarea name="sentiment_text" form="sentiment_form">Enter text here...</textarea>
-          <input type="submit" value="submit">
+            <textarea name="sentiment_text" form="sentiment_form" placeholder="Enter text here..."></textarea>
+            <br>
+            <input class="buttonstd" type="submit" value="Submit">
         </form>
 
         {% if sentiments %}
             {% if sentiments.results['errors'] %}
                 <hr>
                 <h2>Errors :(</h2>
-                {% for error in sentiments.results['errors'] %}
-                    <h3>{{ error }}</h3>
-                {% endfor %}
+                <h3>{{ sentiments.results['errors'] | safe }}</h3>
+                <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
             {% endif %}
             <hr>
             <h2>Overall sentiment</h2>
@@ -35,7 +35,7 @@
             {% endif %}
             {% if sentiments.results['negatives'] %}
                 <hr>
-                <h2>Negatives >:0</h2>
+                <h2>Negatives >:(</h2>
                 {{ sentiments.results['negatives'] | safe }}
             {% endif %}
         {% else %}
