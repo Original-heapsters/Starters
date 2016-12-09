@@ -8,12 +8,18 @@ from oauth import OAuthHelpers
 from AuxClasses import SentimentAnalysis
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
-import re
+from clarifai.rest import ClarifaiApp
+from pprint import pprint
+import re, os
 
 keys = KeyLoader.KeyLoader('../../keys.json')
 
 fbID, fbSecret = keys.getCredentials('facebook')
 hpeID, hpeSecret = keys.getCredentials('hpe_haven')
+clarifID, clarifSecret = keys.getCredentials('clarifai')
+os.environ['CLARIFAI_APP_ID'] = clarifID
+os.environ['CLARIFAI_APP_SECRET'] = clarifSecret
+clarif = ClarifaiApp()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
@@ -68,6 +74,28 @@ def sentimental():
             return render_template('sentimental.html', sentiments=sentiments)
         else:
             return render_template('sentimental.html')
+
+@app.route('/clarifai', methods=['GET','POST'])
+def clarifai():
+    if request.method == "POST":
+        tags = ''
+        link_to_tag = request.form['image_url']
+        tags = clarif.tag_urls([link_to_tag])
+        pprint(tags)
+        output = tags['outputs']
+
+        data = output[0]['data']
+        print (data)
+        concepts = data['concepts']
+
+        tag_list = []
+        for tag in concepts:
+            tag_list.append(tag['name'])
+
+        return render_template('clarifai.html', original_image=request.form['image_url'],tags=tag_list)
+    else:
+
+        return render_template('clarifai.html')
 
 @app.route('/logout')
 def logout():
