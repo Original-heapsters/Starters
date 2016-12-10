@@ -3,17 +3,17 @@ from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
-from AuxClasses import KeyLoader
+from Scripts import KeyLoader
 from oauth import OAuthHelpers
-from AuxClasses import SentimentAnalysis
-from AuxClasses import ConceptExtractor
+from Scripts import SentimentAnalysis
+from Scripts import ConceptExtractor
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
 from pprint import pprint
 import re, os
 
-keys = KeyLoader.KeyLoader('../../keys.json')
+keys = KeyLoader.KeyLoader('keys.json')
 
 fbID, fbSecret = keys.getCredentials('facebook')
 hpeID, hpeSecret = keys.getCredentials('hpe_haven')
