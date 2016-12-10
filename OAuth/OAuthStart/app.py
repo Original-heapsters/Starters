@@ -59,39 +59,56 @@ def load_user(id):
 def index():
     return render_template('index.html')
 
+@app.route('/journal', methods=['GET', 'POST'])
+def journal():
+    if request.method == "POST":
+        print('posting')
+        journal = None
+        hodClient = HODClient(hpeID)
+        parser = HODResponseParser()
+        journal = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
+        text_to_analyze = request.form['journal_text']
+        # split text by punctionation
+        text = re.split('[?.,!]', text_to_analyze.lower())
+        journal.doPost(text, 'eng')
+
+        return render_template('journal.html', journal=journal)
+    else:
+        return render_template('journal.html')
+
 @app.route('/sentimental', methods=['GET', 'POST'])
 def sentimental():
-        if request.method == "POST":
-            print('posting')
-            sentiments = None
-            hodClient = HODClient(hpeID)
-            parser = HODResponseParser()
-            sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
-            text_to_analyze = request.form['sentiment_text']
-            # split text by punctionation
-            text = re.split('[?.,!]', text_to_analyze)
-            sentiments.doPost(text, 'eng')
+    if request.method == "POST":
+        print('posting')
+        sentiments = None
+        hodClient = HODClient(hpeID)
+        parser = HODResponseParser()
+        sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
+        text_to_analyze = request.form['sentiment_text']
+        # split text by punctionation
+        text = re.split('[?.,!]', text_to_analyze)
+        sentiments.doPost(text, 'eng')
 
-            return render_template('sentimental.html', sentiments=sentiments)
-        else:
-            return render_template('sentimental.html')
+        return render_template('sentimental.html', sentiments=sentiments)
+    else:
+        return render_template('sentimental.html')
 
 @app.route('/conceptual', methods=['GET', 'POST'])
 def conceptual():
-        if request.method == "POST":
-            print('posting')
-            concepts = None
-            hodClient = HODClient(hpeID)
-            parser = HODResponseParser()
-            concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
-            text_to_analyze = request.form['concept_text']
-            # split text by punctionation
-            concepts.doPost(text_to_analyze)
+    if request.method == "POST":
+        print('posting')
+        concepts = None
+        hodClient = HODClient(hpeID)
+        parser = HODResponseParser()
+        concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
+        text_to_analyze = request.form['concept_text']
+        # split text by punctionation
+        concepts.doPost(text_to_analyze)
 
 
-            return render_template('conceptual.html', concepts=concepts)
-        else:
-            return render_template('conceptual.html')
+        return render_template('conceptual.html', concepts=concepts)
+    else:
+        return render_template('conceptual.html')
 
 @app.route('/clarifai', methods=['GET','POST'])
 def clarifai():
