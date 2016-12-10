@@ -132,6 +132,10 @@ def clarifai():
 
         return render_template('clarifai.html')
 
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
 @app.route('/logout')
 def logout():
     logout_user()
