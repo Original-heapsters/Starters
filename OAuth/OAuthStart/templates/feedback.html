@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if current_user.is_authenticated %}
+        <h2>Thanks for your feedback.</h2>
+        <img src="/static/beggar.jpg" height="200px">
+        <br>
+        <input class="buttonstd" type="submit" value="Back to home" href="index.html">
+    {% endif %}
+{% endblock %}
