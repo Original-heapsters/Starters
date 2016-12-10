@@ -65,3 +65,16 @@ ul.topnav li.right {float: right;}
 .buttonstd:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+th {
+    background-color: #008CBA;
+    color: white;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2}
+
+tr:hover {background-color: #f5f5f5}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+}

@@ -6,6 +6,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user,\
 from AuxClasses import KeyLoader
 from oauth import OAuthHelpers
 from AuxClasses import SentimentAnalysis
+from AuxClasses import ConceptExtractor
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
@@ -74,6 +75,23 @@ def sentimental():
             return render_template('sentimental.html', sentiments=sentiments)
         else:
             return render_template('sentimental.html')
+
+@app.route('/conceptual', methods=['GET', 'POST'])
+def conceptual():
+        if request.method == "POST":
+            print('posting')
+            concepts = None
+            hodClient = HODClient(hpeID)
+            parser = HODResponseParser()
+            concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
+            text_to_analyze = request.form['concept_text']
+            # split text by punctionation
+            concepts.doPost(text_to_analyze)
+
+
+            return render_template('conceptual.html', concepts=concepts)
+        else:
+            return render_template('conceptual.html')
 
 @app.route('/clarifai', methods=['GET','POST'])
 def clarifai():
