@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a39893f-dac1-48d2-a3d2-62aff5191f76" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/ConceptExtractor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/templates/conceptual.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AuxClasses/PoliceDeathData.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OAuth/OAuthStart/db.sqlite" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/db.sqlite" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OAuth/OAuthStart/Static/style.css" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/Static/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OAuth/OAuthStart/app.py" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OAuth/OAuthStart/templates/index.html" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OAuth/OAuthStart/templates/layout.html" afterPath="$PROJECT_DIR$/OAuth/OAuthStart/templates/layout.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,14 +20,34 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="88" column="24" lean-forward="false" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
+            <state relative-caret-position="2618">
+              <caret line="154" column="37" lean-forward="false" selection-start-line="154" selection-start-column="37" selection-end-line="154" selection-end-column="37" />
               <folding>
                 <element signature="e#0#68#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PoliceDeathData.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AuxClasses/PoliceDeathData.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getty.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AuxClasses/getty.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="19" column="40" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -55,16 +72,6 @@
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Clarifai.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AuxClasses/Clarifai/Clarifai.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="25" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -101,24 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="clarifai.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/templates/clarifai.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="59" lean-forward="false" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/Static/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="79" column="1" lean-forward="false" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+            <state relative-caret-position="405">
+              <caret line="70" column="17" lean-forward="true" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -176,9 +170,10 @@
         <option value="$PROJECT_DIR$/AuxClasses/ConceptExtractor.py" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/templates/index.html" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/templates/layout.html" />
-        <option value="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/templates/conceptual.html" />
         <option value="$PROJECT_DIR$/OAuth/OAuthStart/Static/style.css" />
+        <option value="$PROJECT_DIR$/OAuth/OAuthStart/app.py" />
+        <option value="$PROJECT_DIR$/AuxClasses/PoliceDeathData.py" />
       </list>
     </option>
   </component>
@@ -598,8 +593,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.ConceptExtractor" />
-        <item index="1" class="java.lang.String" itemvalue="Python.app" />
+        <item index="0" class="java.lang.String" itemvalue="Python.app" />
+        <item index="1" class="java.lang.String" itemvalue="Python.ConceptExtractor" />
         <item index="2" class="java.lang.String" itemvalue="Python.Clarifai" />
         <item index="3" class="java.lang.String" itemvalue="Python.GettyImages" />
         <item index="4" class="java.lang.String" itemvalue="Python.HPEHaven" />
@@ -650,16 +645,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/AuxClasses/SentimentAnalysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="31" column="58" lean-forward="false" selection-start-line="31" selection-start-column="58" selection-end-line="31" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/templates/sentimental.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
@@ -932,13 +917,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AuxClasses/getty.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="40" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AuxClasses/KeyLoader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1035,16 +1013,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="88" column="24" lean-forward="false" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AuxClasses/ConceptExtractor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
@@ -1067,9 +1035,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/Static/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="79" column="1" lean-forward="false" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+        <state relative-caret-position="405">
+          <caret line="70" column="17" lean-forward="true" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AuxClasses/getty.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="40" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AuxClasses/PoliceDeathData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OAuth/OAuthStart/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2618">
+          <caret line="154" column="37" lean-forward="false" selection-start-line="154" selection-start-column="37" selection-end-line="154" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
