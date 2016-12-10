@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if current_user.is_authenticated %}
+        <h2>Tell me how you REALLY feel...</h2>
+        <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
+            <textarea name="journal_text" form="journal_form" placeholder="Enter text here..."></textarea>
+            <br>
+            <input class="buttonstd" type="submit" value="Submit">
+        </form>
+
+        {% if journal %}
+            {% if journal.results['errors'] %}
+                <hr>
+                <h2>Errors :(</h2>
+                <h3>{{ journal.results['errors'] | safe }}</h3>
+                <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
+            {% endif %}
+            <hr>
+            <h2>Overall sentiment</h2>
+            <h3>{{ journal.results['overall'] | safe }}</h3>
+            {% if 'neutral' in journal.results['overall'] %}
+                <img src="/static/bored.jpg" height="500px" alt="Is that all youve got?">
+            {% endif %}
+            {% if 'positive' in journal.results['overall'] %}
+                <img src="/static/positive.png" height="500px" alt="Oh Yiissss!">
+            {% endif %}
+            {% if 'negative' in journal.results['overall'] %}
+                <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
+            {% endif %}
+            {% if journal.results['positives'] %}
+                <hr>
+                <h2>Positives :)</h2>
+                {{ journal.results['positives'] | safe }}
+                <hr>
+            {% endif %}
+            {% if journal.results['negatives'] %}
+                <hr>
+                <h2>Negatives >:(</h2>
+                {{ journal.results['negatives'] | safe }}
+            {% endif %}
+        {% else %}
+            <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
+        {% endif %}
+    {% else %}
+        <h1><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Log in fool!</a></h1>
+        <img src="/static/loginplz.jpg" height="500px" alt="LOGINNNN">
+    {% endif %}
+{% endblock %}
