@@ -11,6 +11,7 @@ from Scripts import userIds
 from oauth import OAuthHelpers
 from Scripts import SentimentAnalysis
 from Scripts import ConceptExtractor
+from Scripts import dynamo
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
@@ -260,6 +261,7 @@ def breakdown():
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
+<<<<<<< HEAD
 @app.route('/search/')
 def search():
     ids = userIds.userIds()
@@ -270,6 +272,18 @@ def search():
 def userpage(useridstr):
     # show the user profile for that user
     return render_template('index.html')
+
+@app.route('/finduser', methods=['GET','POST'])
+def finduser():
+    dyn = dynamo.dynamoOps()
+
+    if request.method == 'POST':
+        userdata = dyn.getUserByID(request.form['finduserid'])
+    else:
+        userdata = dyn.getUserByID('1234')
+
+    return render_template('finduser.html', userdata=userdata)
+
 
 @app.route('/logout')
 def logout():
