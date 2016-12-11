@@ -24,11 +24,11 @@ for bucket in conn.get_all_buckets():
                 name = bucket.name,
                 created = bucket.creation_date,
         ))
-testfile = 'result.json'
+testfile = 'result.csv'
 
 bucket1 = conn.get_bucket("elasticbeanstalk-us-east-1-081891355789")
 
 k = Key(bucket1)
 k.key = 'PlezaDump'
 
-k.set_contents_from_filename('result.json', policy='public-read')
+k.set_contents_from_filename('result.csv', policy='public-read')
