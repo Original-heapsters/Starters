@@ -57,15 +57,22 @@ class FacebookSignIn(OAuthHelpers):
                   'redirect_uri': self.get_callback_url()}
         )
         me = oauth_session.get('me?fields=id,email,name').json()
+        if 'russell' in me.get('name').lower():
+            role = 'admin'
+        else:
+            role = 'regular'
+
         for item in me:
             print(me[item])
+            print(role)
         return (
             'facebook$' + me['id'],
             me.get('email').split('@')[0],  # Facebook does not provide
             # username, so the email's user
             # is used instead
             me.get('email'),
-            me.get('name')
+            me.get('name'),
+            role
         )
 class TwitterSignIn(OAuthHelpers):
     def __init__(self):

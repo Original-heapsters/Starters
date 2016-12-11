@@ -4,6 +4,7 @@
         <h2>Thanks for your feedback.</h2>
         <img src="/static/beggar.jpg" height="200px">
         <br>
-        <a class="buttonstd" type="submit" href=" {{ url_for('index') }}">Back to home</a>
+        <h3><a class="buttonstd" href="{{ url_for('index') }}">Return</a></h3>
+        <!--<h3><a class="buttonstd" href="{{ url_for('journal') }}">See analysis</a></h3>-->
     {% endif %}
 {% endblock %}
