@@ -1,4 +1,5 @@
 from botocore.exceptions import ClientError
+from Scripts import KeyLoader
 import json
 import boto3
 import decimal
@@ -19,9 +20,15 @@ class dynamoOps(object):
 
     def setup(self):
 
-        dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+        keys = KeyLoader.KeyLoader('../keys.json')
+
+        id,secret = keys.getCredentials('aws')
+
+        dynamodb = boto3.resource('dynamodb',aws_access_key_id=id,
+            aws_secret_access_key=secret, region_name='us-east-1')
 
         table = dynamodb.Table('User_Sentiment')
+
 
         return table
 
