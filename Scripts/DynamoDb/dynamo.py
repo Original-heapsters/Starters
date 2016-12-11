@@ -9,8 +9,8 @@ from Scripts import KeyLoader
 
 conn = dynamodb.connect_to_region(
         'us-west-2',
-        aws_access_key_id='',
-        aws_secret_access_key='')
+        aws_access_key_id='xx',
+        aws_secret_access_key='xx')
 
 
 print (conn.list_tables())
