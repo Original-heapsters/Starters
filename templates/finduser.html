@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if current_user.is_authenticated %}
-        <h2>Find user</h2>
+        <h2>Search Entries</h2>
         <form action="{{ url_for('finduser') }}" id="find_form" method="Post">
             <input name="finduserid" form="find_form" placeholder="Enter text here..."></input>
             <br>
@@ -24,7 +24,7 @@
                 </table>
             </div>
         {% else %}
-            <h1>No user</h1>
+            <h1>No entries found.</h1>
             <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
         {% endif %}
     {% else %}

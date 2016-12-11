@@ -386,7 +386,7 @@ def finduser():
     if request.method == 'POST':
         userdata = dyn.getUserByID(request.form['finduserid'])
     else:
-        userdata = dyn.getUserByID('Bob')
+        userdata = None
 
     return render_template('finduser.html', userdata=userdata)
 

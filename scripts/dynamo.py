@@ -46,7 +46,7 @@ class dynamoOps(object):
 
         for i in response['Items']:
             #print(i['Text'])
-            if id in i['Text']:
+            if id.lower() in i['Text'].lower():
                 results[i['TimeStamp']] = i['Text']
                 #print('FOUND IT')
                 #print(i['TimeStamp'])
