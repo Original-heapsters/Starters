@@ -98,7 +98,7 @@ def journal():
         text = re.split('[?.,!]', text_to_analyze.lower())
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
-        #return render_template('thankyou.html')
+        return render_template('thankyou.html')
         flag_for_review = None
         if 'neutral' in sentiments.results['overall']:
             pos = calc_avg(sentiments.d, "positives")
