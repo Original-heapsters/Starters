@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% for message in get_flashed_messages() %}
+        <p><b>Error</b>: {{ message }}</p>
+    {% endfor %}
+    {% if current_user.is_authenticated %}
+        <h2>Searching...</h2>
+
+    {% else %}
+        {% if user_ids %}
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Employee UserID</th>
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">Employee Score</th>
+                        </tr>
+                    </thead>
+                    <td>
+                        <table>
+                            {% for d in user_ids.results['ID'] %}
+                                <tr>
+                                    <td>
+                                        {{ d }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {% for d in user_ids.results['NAME'] %}
+                                <tr>
+                                    <td>
+                                        {{ d }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {% for d in user_ids.results['SCORE'] %}
+                                <tr>
+                                    <td>
+                                        {{ d }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {% for d in user_ids.results['ID'] %}
+                                <tr>
+                                    <td>
+                                        <a class="buttonuser" href="{{ url_for('search/1234/') }}">{{ d }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </table>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

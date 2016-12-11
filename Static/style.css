@@ -39,6 +39,14 @@ ul.topnav li.right {float: right;}
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
+.buttonuser {
+    font-size: 5px;
+    border-radius: 8px;
+    background-color: #008CBA;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    width: 100px;
+}
 
 .buttonhome:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
