@@ -256,9 +256,19 @@ def csv_to_dict(input_file):
         user['User_ID'] = row['User_ID']
         user['Role'] = row['Role']
     pprint(user)
+    entry = {
+    'TimeStamp': user['TimeStamp'],
+    'Concept': user['Concepts'],
+    'Role': user['Role'],
+    'Score': user['Score'],
+    'Sentiment': user['Sentiment'],
+    'Text': user['Text'],
+    'User_ID': '1234'
+    }
+
     dym = dynamo.dynamoOps()
 
-    dym.addEntry(user)
+    dym.addEntry(entry)
 
     send_to_s3(input_file)
 
