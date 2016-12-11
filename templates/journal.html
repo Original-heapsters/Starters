@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if current_user.is_authenticated %}
-        <h2>No really, tell me how you REALLY feel...</h2>
+        <h2>No really, how you REALLY feel...</h2>
         <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
             <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" cols="75"></textarea>
             <br>
@@ -26,7 +26,7 @@
                 <img src="/static/positive1.png" height="500px" alt="Oh Yiissss!">
             {% endif %}
             {% if 'negative' in sentiments.results['overall'] %}
-                <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
+                <img src="/static/negative1.jpg" height="500px" alt="Oh Noez!">
             {% endif %}
             {% if sentiments.results['positives'] %}
                 <hr>
