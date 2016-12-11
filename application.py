@@ -5,13 +5,13 @@ from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
-from scripts import KeyLoader
-from scripts import Admin_Data
-from scripts import userIds
+from Scripts import KeyLoader
+from Scripts import Admin_Data
+from Scripts import userIds
 from oauth import OAuthHelpers
-from scripts import SentimentAnalysis
-from scripts import ConceptExtractor
-from scripts import dynamo
+from Scripts import SentimentAnalysis
+from Scripts import ConceptExtractor
+from Scripts import dynamo
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
@@ -98,7 +98,7 @@ def journal():
         text = re.split('[?.,!]', text_to_analyze.lower())
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
-        #return render_template('thankyou.html')
+        return render_template('thankyou.html')
         flag_for_review = None
         if 'neutral' in sentiments.results['overall']:
             pos = calc_avg(sentiments.d, "positives")

@@ -1,5 +1,5 @@
 from botocore.exceptions import ClientError
-from scripts import KeyLoader
+from Scripts import KeyLoader
 import json
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
