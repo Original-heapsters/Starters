@@ -164,11 +164,14 @@ def breakdown():
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
-@app.route('/finduser')
+@app.route('/finduser', methods=['GET','POST'])
 def finduser():
     dyn = dynamo.dynamoOps()
 
-    userdata = dyn.getUserByID('1234')
+    if request.method == 'POST':
+        userdata = dyn.getUserByID(request.form['finduserid'])
+    else:
+        userdata = dyn.getUserByID('1234')
 
     return render_template('finduser.html', userdata=userdata)
 

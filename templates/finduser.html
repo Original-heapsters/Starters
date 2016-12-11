@@ -11,6 +11,7 @@
         {% if userdata %}
             {{ userdata | safe }}
         {% else %}
+            <h1>No user</h1>
             <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
         {% endif %}
     {% else %}

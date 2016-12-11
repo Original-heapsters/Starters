@@ -38,11 +38,15 @@ class dynamoOps(object):
         except ClientError as e:
             print(e.response['Error']['Message'])
 
-        item = response['Item']
-        print("GetItem succeeded:")
-        print(json.dumps(item, indent=4, cls=DecimalEncoder))
+        if 'Item' in response:
 
-        return item
+            item = response['Item']
+            print("GetItem succeeded:")
+            print(json.dumps(item, indent=4, cls=DecimalEncoder))
+
+            return item
+        else:
+            return None
 
 if __name__ == '__main__':
     dym = dynamoOps()
