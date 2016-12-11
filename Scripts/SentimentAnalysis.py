@@ -7,9 +7,12 @@ class SentimentAnalysis(object):
         self.hodClient = hodClient
         self.parser = parser
         self.results = results
+        self.d = {}
+        self.aggregate = {}
 
     def sentimentRequestCompleted(self, response, **context):
         sentiment_dict = {}
+        sentiment_result = {}
         resp = "<br>"
         payloadObj = self.parser.parse_payload(response)
         if payloadObj is None:
@@ -24,7 +27,10 @@ class SentimentAnalysis(object):
                 positives = payloadObj["positive"]
                 resp += "Positive:<br>"
                 sentiment_dict['positives'] = ''
+                sentiment_result['positives'] = []
                 for pos in positives:
+                    pos['score'] = round(pos['score'], 3)
+                    sentiment_result['positives'].append(pos)
                     pos_text = ''
                     pos_text += "Sentiment: " + pos["sentiment"] + "<br>"
                     resp += "Sentiment: " + pos["sentiment"] + "<br>"
@@ -40,7 +46,10 @@ class SentimentAnalysis(object):
                 negatives = payloadObj["negative"]
                 resp += "Negative:<br>"
                 sentiment_dict['negatives'] = ''
+                sentiment_result['negatives'] = []
                 for neg in negatives:
+                    neg['score'] = round(neg['score'], 3)
+                    sentiment_result['negatives'].append(neg)
                     neg_text = ''
                     neg_text += "Sentiment: " + neg["sentiment"] + "<br>"
                     resp += "Sentiment: " + neg["sentiment"] + "<br>"
@@ -65,11 +74,11 @@ class SentimentAnalysis(object):
                         sentiment_dict['overall'] += ':)'
                 elif aggregate["sentiment"] == 'negative':
                     sentiment_dict['overall'] += '>:('
-
+                self.aggregate = {'score': round(aggregate["score"],3), 'sentiment': aggregate["sentiment"]}
                 resp += aggregate["sentiment"]
         self.results = sentiment_dict
+        self.d = sentiment_result
         print(resp)
-
 
     def doPost(self, textToAnalyze, language):
         hodApp = HODApps.ANALYZE_SENTIMENT

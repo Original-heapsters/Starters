@@ -6,6 +6,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
 from Scripts import KeyLoader
 from Scripts import Admin_Data
+from Scripts import userIds
 from oauth import OAuthHelpers
 from Scripts import SentimentAnalysis
 from Scripts import ConceptExtractor
@@ -13,7 +14,7 @@ from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
 from pprint import pprint
-import re, os
+import re, os, json, datetime, time, csv
 
 keys = KeyLoader.KeyLoader('keys.json')
 
@@ -61,6 +62,17 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
+#
+# @app.route('/search', methods=['GET', 'POST'])
+# def search():
+#     if request.method == "POST":
+#         hodClient = HODClient(hpeID)
+#         parser = HODResponseParser()
+#         user_ids = request.form['journal_text']
+#
+#         return render_template('search.html', user_ids)
+
+
 
 @app.route('/')
 def index():
@@ -83,12 +95,79 @@ def journal():
         text = re.split('[?.,!]', text_to_analyze.lower())
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
-        # at the moment we have 2 dictionaries sentiments and concepts
-        # which are unused and we are waiting to find
         #return render_template('thankyou.html')
-        return render_template('journal.html', sentiments=sentiments, concepts=concepts)
+        flag_for_review = None
+        if 'neutral' in sentiments.results['overall']:
+            pos = calc_avg(sentiments.d, "positives")
+            neg = calc_avg(sentiments.d, "negatives")
+            print(pos, neg)
+            if pos > .70 and neg > .70:
+                # pass crazy_person = true
+                # crazyperson.jpg
+                flag_for_review = True
+                print('Watch out for this man')
+
+        ts = time.time()
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')
+
+        write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate['score'], timestamp, '1234','dev')
+        return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review)
     else:
         return render_template('index.html')
+
+def write_json(text, sentiment, concepts, score, timestamp, id, role):
+    user = {}
+    user['Text'] = text
+    user['Sentiment'] = sentiment
+    user['Score'] = score
+    user['Concepts'] = concepts
+    user['TimeStamp'] = timestamp
+    user['User_ID'] = id
+    user['Role'] = role
+    pprint(user)
+
+    with open('test.csv', 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(["Text", "Sentiment", "Score", "Concepts", "TimeStamp", "User_ID", "Role"])
+        csv_w.writerow([user['Text'],
+                        user['Sentiment'],
+                        user['Score'],
+                        user['Concepts'],
+                        user['TimeStamp'],
+                        user['User_ID'],
+                        user['Role']])
+
+    csv_to_dict('test.csv')
+
+def csv_to_dict(input_file):
+    user = {}
+    user['Text'] = None
+    user['Sentiment'] = None
+    user['Score'] = None
+    user['Concepts'] = None
+    user['TimeStamp'] = None
+    user['User_ID'] = None
+    user['Role'] = None
+
+    rows = csv.DictReader(open(input_file))
+
+    for row in rows:
+        user['Text'] = row['Text']
+        user['Sentiment'] = row['Sentiment']
+        user['Score'] = row['Score']
+        user['Concepts'] = row['Concepts']
+        user['TimeStamp'] = row['TimeStamp']
+        user['User_ID'] = row['User_ID']
+        user['Role'] = row['Role']
+    pprint(user)
+
+def calc_avg(dict, type):
+    print(dict)
+    avg = 0
+    for score in dict[type]:
+        avg += score['score']
+    avg = avg / len(dict[type])
+    return abs(avg)
 
 @app.route('/sentimental', methods=['GET', 'POST'])
 def sentimental():
@@ -162,6 +241,17 @@ def breakdown():
     admin_data = admin.getAdminBreakdown()
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
+
+@app.route('/search/')
+def search():
+    ids = userIds.userIds()
+    user_ids= ids.getuserIds()
+    return render_template('search.html', user_ids=ids)
+
+@app.route("/search/<useridstr>/")
+def userpage(useridstr):
+    # show the user profile for that user
+    return render_template('index.html')
 
 @app.route('/logout')
 def logout():
