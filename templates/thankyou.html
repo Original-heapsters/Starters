@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if current_user.is_authenticated %}
+        <h2>Thanks for your feedback.</h2>
+        <img src="/static/beggar.jpg" height="200px">
+        <br>
+        <h3><a class="buttonstd" href="{{ url_for('index') }}">Return</a></h3>
+        <!--<h3><a class="buttonstd" href="{{ url_for('journal') }}">See analysis</a></h3>-->
+    {% endif %}
+{% endblock %}

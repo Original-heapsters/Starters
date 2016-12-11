@@ -71,8 +71,8 @@ def journal():
         # split text by punctionation
         text = re.split('[?.,!]', text_to_analyze.lower())
         journal.doPost(text, 'eng')
-
-        return render_template('journal.html', journal=journal)
+        return render_template('thankyou.html')
+        #render_template('journal.html', journal=journal)
     else:
         return render_template('journal.html')
 
@@ -131,6 +131,10 @@ def clarifai():
     else:
 
         return render_template('clarifai.html')
+
+@app.route('/thankyou')
+def thankyou():
+    return render_template('thankyou.html')
 
 @app.route('/feedback')
 def feedback():
