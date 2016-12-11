@@ -244,8 +244,8 @@ def search():
     user_ids= ids.getuserIds()
     return render_template('search.html', user_ids=ids)
 
-@app.route("/search/<useridstr>/")
-def userpage(useridstr):
+@app.route("/search/<user_id>/")
+def search_user(user_id):
     # show the user profile for that user
     return render_template('index.html')
 

@@ -3,7 +3,7 @@
     {% for message in get_flashed_messages() %}
         <p><b>Error</b>: {{ message }}</p>
     {% endfor %}
-    {% if current_user.is_authenticated %}
+    {% if not current_user.is_authenticated %}
         <h2>Searching...</h2>
 
     {% else %}
@@ -55,7 +55,7 @@
                             {% for d in user_ids.results['ID'] %}
                                 <tr>
                                     <td>
-                                        <a class="buttonuser" href="{{ url_for('search/1234/') }}">{{ d }}</a>
+                                        <a class="buttonuser" href="{{ url_for('search_user', user_id=1234) }}">{{ d }}</a>
                                     </td>
                                 </tr>
                             {% endfor %}
