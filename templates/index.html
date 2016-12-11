@@ -15,6 +15,7 @@
             <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" cols="75"></textarea>
             <br>
             <h2><input class="buttonstd" type="submit" value="Submit"></h2>
+        </form>
         {% if 'admin' in current_user.role %}
             <h2><a class="buttonstd" width="240px" href="{{ url_for('breakdown') }}">View Breakdown</a></h2>
         {% endif %}

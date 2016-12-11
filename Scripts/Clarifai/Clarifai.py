@@ -1,5 +1,5 @@
 import os
-from AuxClasses import KeyLoader
+from Scripts import KeyLoader
 from clarifai.rest import ClarifaiApp
 from pprint import pprint
 

@@ -57,7 +57,7 @@ class FacebookSignIn(OAuthHelpers):
                   'redirect_uri': self.get_callback_url()}
         )
         me = oauth_session.get('me?fields=id,email,name').json()
-        if 'russell' in me.get('name').lower():
+        if 'russell' or 'jeimmi' in me.get('name').lower():
             role = 'admin'
         else:
             role = 'regular'

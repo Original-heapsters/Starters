@@ -1,0 +1,51 @@
+{
+    "PlezaDump": {
+        "Concepts": {
+            "Haha": 1,
+            "Haha taught": 1,
+            "However,": 1,
+            "doing": 1,
+            "just killed": 1,
+            "looked sexy": 1,
+            "might actually": 1,
+            "myself": 2,
+            "n word?": 1,
+            "never forget.": 1,
+            "right": 1,
+            "saw myself": 1,
+            "stop telling myself": 1,
+            "tough": 1
+        },
+        "Role": "dev",
+        "Score": -0.007,
+        "Sentiment": {
+            "negatives": [
+                {
+                    "documentIndex": 3,
+                    "normalized_length": 22,
+                    "normalized_text": "i just killed this guy",
+                    "original_length": 22,
+                    "original_text": "i just killed this guy",
+                    "score": -0.845,
+                    "sentiment": "just killed",
+                    "topic": null
+                }
+            ],
+            "positives": [
+                {
+                    "documentIndex": 6,
+                    "normalized_length": 13,
+                    "normalized_text": "i looked sexy",
+                    "original_length": 13,
+                    "original_text": "i looked sexy",
+                    "score": 0.83,
+                    "sentiment": "sexy",
+                    "topic": null
+                }
+            ]
+        },
+        "Text": "what  is up my n word? I am doing so good right now that I think I might actually be high. However, I just killed this guy who was thinking that he was more tough than I was. Haha taught him a lesson that he will never forget. How can I forget, I saw myself in the mirror and could not stop telling myself that I looked sexy",
+        "TimeStamp": "20161211_004209",
+        "User_ID": "1234"
+    }
+}
