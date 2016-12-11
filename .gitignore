@@ -1,5 +1,6 @@
 /keys.json
 .idea/
+/db.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
