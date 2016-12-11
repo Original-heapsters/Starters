@@ -17,6 +17,7 @@ keys = KeyLoader.KeyLoader('keys.json')
 
 fbID, fbSecret = keys.getCredentials('facebook')
 hpeID, hpeSecret = keys.getCredentials('hpe_haven')
+awdbID, awdbSecret = keys.getCredentials('aws_dynamo')
 clarifID, clarifSecret = keys.getCredentials('clarifai')
 os.environ['CLARIFAI_APP_ID'] = clarifID
 os.environ['CLARIFAI_APP_SECRET'] = clarifSecret
@@ -33,8 +34,11 @@ app.config['OAUTH_CREDENTIALS'] = {
     'twitter': {
         'id': '3RzWQclolxWZIMq5LJqzRZPTl',
         'secret': 'm9TEd58DSEtRrZHpz2EjrV9AhsBRxKMo8m3kuIZj3zLwzwIimt'
+    },
+    'aws_dynamo'
+        'id': awdbID,
+        'secrete': awdbSecret
     }
-}
 
 db = SQLAlchemy(app)
 lm = LoginManager(app)
