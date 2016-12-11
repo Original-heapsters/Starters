@@ -5,6 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
 from Scripts import KeyLoader
 from Scripts import Admin_Data
+from Scripts import userIds
 from oauth import OAuthHelpers
 from Scripts import SentimentAnalysis
 from Scripts import ConceptExtractor
@@ -194,6 +195,18 @@ def breakdown():
     admin_data = admin.getAdminBreakdown()
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
+
+@app.route('/search')
+def search():
+    ids = userIds.userIds()
+    user_ids= ids.getuserIds()
+    return render_template('search.html', user_ids=ids)
+
+@app.route('/search/<userid>')
+def search():
+    ids = userIds.userIds()
+    user_ids= ids.getuserIds()
+    return render_template('search.html', user_ids=ids)
 
 @app.route('/logout')
 def logout():
