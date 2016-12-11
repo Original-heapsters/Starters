@@ -58,15 +58,15 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
-
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    if request.method == "POST":
-        hodClient = HODClient(hpeID)
-        parser = HODResponseParser()
-        user_ids = request.form['journal_text']
-
-        return render_template('search.html', user_ids)
+#
+# @app.route('/search', methods=['GET', 'POST'])
+# def search():
+#     if request.method == "POST":
+#         hodClient = HODClient(hpeID)
+#         parser = HODResponseParser()
+#         user_ids = request.form['journal_text']
+#
+#         return render_template('search.html', user_ids)
 
 
 
@@ -217,17 +217,16 @@ def breakdown():
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
-@app.route('/search')
+@app.route('/search/')
 def search():
     ids = userIds.userIds()
     user_ids= ids.getuserIds()
     return render_template('search.html', user_ids=ids)
 
-@app.route('/search/<userid>')
-def search():
-    ids = userIds.userIds()
-    user_ids= ids.getuserIds()
-    return render_template('search.html', user_ids=ids)
+@app.route("/search/<useridstr>/")
+def userpage(useridstr):
+    # show the user profile for that user
+    return render_template('index.html')
 
 @app.route('/logout')
 def logout():
