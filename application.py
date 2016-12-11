@@ -12,7 +12,7 @@ from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
 from pprint import pprint
-import re, os
+import re, os, json, datetime, time
 
 keys = KeyLoader.KeyLoader('keys.json')
 
@@ -79,8 +79,6 @@ def journal():
         text = re.split('[?.,!]', text_to_analyze.lower())
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
-        # at the moment we have 2 dictionaries sentiments and concepts
-        # which are unused and we are waiting to find
         #return render_template('thankyou.html')
         flag_for_review = None
         if 'neutral' in sentiments.results['overall']:
@@ -92,9 +90,29 @@ def journal():
                 # crazyperson.jpg
                 flag_for_review = True
                 print('Watch out for this man')
+
+        ts = time.time()
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')
+
+        write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate['score'], timestamp, '1234','dev')
         return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review)
     else:
         return render_template('index.html')
+
+def write_json(text, sentiment, concepts, score, timestamp, id, role):
+    user = {'PlezaDump': {}}
+    user['PlezaDump']['Text'] = text
+    user['PlezaDump']['Sentiment'] = sentiment
+    user['PlezaDump']['Score'] = score
+    user['PlezaDump']['Concepts'] = concepts
+    user['PlezaDump']['TimeStamp'] = timestamp
+    user['PlezaDump']['User_ID'] = id
+    user['PlezaDump']['Role'] = role
+    pprint(user)
+
+    with open('result.json', 'w') as fp:
+        json.dump(user, fp, indent=4, sort_keys=True)
+
 
 def calc_avg(dict, type):
     print(dict)
