@@ -120,10 +120,11 @@ def journal():
 
 def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user = {}
-    user['Text'] = text
+    user['Text'] = text.replace("\""," ").replace("{", " ").replace("}"," ")
     user['Sentiment'] = sentiment
     user['Score'] = score
-    user['Concepts'] = concepts
+    user['ConceptsWords'] = ', '.join(concepts.keys())
+    user['ConceptsCounts'] = ', '.join(str(concepts.values()))
     user['TimeStamp'] = timestamp
     user['User_ID'] = id
     user['Role'] = role
@@ -132,16 +133,17 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
     filename = user['TimeStamp'] + '.csv'
     with open(filename, 'w', newline="") as out_file:
         csv_w = csv.writer(out_file)
-        csv_w.writerow(["Text", "Sentiment", "Score", "Concepts", "TimeStamp", "User_ID", "Role"])
+        csv_w.writerow(["Text", "Sentiment", "Score", "ConceptsWords", "ConceptsCounts","TimeStamp", "User_ID", "Role"])
         csv_w.writerow([user['Text'],
                         user['Sentiment'],
                         user['Score'],
-                        user['Concepts'],
+                        user['ConceptsWords'],
+                        user['ConceptsCounts'],
                         user['TimeStamp'],
                         user['User_ID'],
                         user['Role']])
 
-    csv_to_dict(filename)
+    #csv_to_dict(filename)
     send_to_s3(filename)
 
 
@@ -166,6 +168,10 @@ def csv_to_dict(input_file):
         user['User_ID'] = row['User_ID']
         user['Role'] = row['Role']
     pprint(user)
+    dym = dynamo.dynamoOps()
+
+    dym.addEntry(user)
+
     send_to_s3(input_file)
 
 def send_to_s3(input_file):
@@ -178,7 +184,7 @@ def send_to_s3(input_file):
     bucket1 = conn.get_bucket("elasticbeanstalk-us-east-1-081891355789")
 
     k = Key(bucket1)
-    k.key = 'PlezaDump/testfile'
+    k.key = 'PlezaDump/'+ input_file + '.csv'
 
     k.set_contents_from_filename(testfile, policy='public-read')
 
