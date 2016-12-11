@@ -113,19 +113,64 @@ def journal():
         ts = time.time()
         timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')
 
-        write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate['score'], timestamp, '1234','dev')
+        write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate, timestamp, '1234','dev')
         return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review)
     else:
         return render_template('index.html')
 
-def write_sentiments(sent,ts):
-    filename = 'sentiments' + ts + '.csv'
-    with open(filename, 'w', newline="") as out_file:
+def write_sentiments(sent, agg, ts):
+    pos_filename = 'possentiments' + ts + '.csv'
+    with open(pos_filename, 'w', newline="") as out_file:
         csv_w = csv.writer(out_file)
         csv_w.writerow(
-            ["positives", "negatives", "aggregate"])
-        csv_w.writerow([sent['positives'],
-                        sent['negatives']])
+            ["documentIndex", "normalized_length", "normalized_text", "original_length", "original_text", "score",
+             "sentiment", "topic"])
+        for x in sent['positives']:
+            csv_w.writerow([x['documentIndex'],
+                            x['normalized_length'],
+                            x['normalized_text'],
+                            x['original_length'],
+                            x['original_text'],
+                            x['score'],
+                            x['sentiment'],
+                            x['topic']])
+
+    neg_filename = 'negsentiments' + ts + '.csv'
+    with open(neg_filename, 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(
+            ["documentIndex", "normalized_length", "normalized_text", "original_length", "original_text", "score",
+             "sentiment", "topic"])
+        for x in sent['negatives']:
+            csv_w.writerow([x['documentIndex'],
+                            x['normalized_length'],
+                            x['normalized_text'],
+                            x['original_length'],
+                            x['original_text'],
+                            x['score'],
+                            x['sentiment'],
+                            x['topic']])
+
+    agg_filename = 'aggsentiments' + ts + '.csv'
+    with open(agg_filename, 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(["sentiment", "score"])
+        csv_w.writerow([agg['sentiment'],
+                        agg['score']])
+
+
+    # csv_to_dict(filename)
+    send_to_s3(pos_filename)
+    send_to_s3(neg_filename)
+    send_to_s3(agg_filename)
+
+def write_concepts(conc,ts):
+    filename = 'concepts' + ts + '.csv'
+    with open(filename, 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(["concept", "occurrence"])
+        for x,y in conc.items():
+            csv_w.writerow([x, y])
 
     # csv_to_dict(filename)
     send_to_s3(filename)
@@ -134,7 +179,7 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user = {}
     user['Text'] = text.replace("\""," ").replace("{", " ").replace("}"," ")
     user['Sentiment'] = sentiment
-    user['Score'] = score
+    user['Score'] = score['score']
     user['ConceptsWords'] = ''.join(concepts.keys())
     user['ConceptsCounts'] = ''.join(str(concepts.values()))
     user['TimeStamp'] = timestamp
@@ -143,7 +188,7 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
     pprint(user)
 
 
-    write_sentiments(sentiment, user['TimeStamp'])
+    write_sentiments(sentiment, score, user['TimeStamp'])
 
 
     #filename = 'sentiments' + user['TimeStamp'] + '.csv'
@@ -159,19 +204,19 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
 
     # csv_to_dict(filename)
     #send_to_s3(filename)
-
-    filename = 'concepts' + user['TimeStamp'] + '.csv'
-    with open(filename, 'w', newline="") as out_file:
-        csv_w = csv.writer(out_file)
-        csv_w.writerow(["text", "concept", "count", "User_ID"])
-        for entry in concepts:
-            csv_w.writerow([text,
-                            entry,
-                            concepts[entry],
-                            id])
+    write_concepts(concepts, user['TimeStamp'])
+    # filename = 'concepts' + user['TimeStamp'] + '.csv'
+    # with open(filename, 'w', newline="") as out_file:
+    #     csv_w = csv.writer(out_file)
+    #     csv_w.writerow(["text", "concept", "count", "User_ID"])
+    #     for entry in concepts:
+    #         csv_w.writerow([text,
+    #                         entry,
+    #                         concepts[entry],
+    #                         id])
 
     # csv_to_dict(filename)
-    send_to_s3(filename)
+    # send_to_s3(filename)
 
     filename = user['TimeStamp'] + '.csv'
     with open(filename, 'w', newline="") as out_file:
