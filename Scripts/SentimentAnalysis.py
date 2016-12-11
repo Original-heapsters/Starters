@@ -7,16 +7,20 @@ class SentimentAnalysis(object):
         self.hodClient = hodClient
         self.parser = parser
         self.results = results
+        self.d = {}
 
     def sentimentRequestCompleted(self, response, **context):
         sentiment_dict = {}
+        sentiment_result = {}
         resp = "<br>"
         payloadObj = self.parser.parse_payload(response)
         if payloadObj is None:
             errorObj = self.parser.get_last_error()
             sentiment_dict['errors'] = ''
+            sentiment_result['errors'] = ''
             for err in errorObj.errors:
                 sentiment_dict['errors'] += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
+                sentiment_result['errors'] += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
                 resp += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
         else:
             app = context["hodapp"]
@@ -24,7 +28,9 @@ class SentimentAnalysis(object):
                 positives = payloadObj["positive"]
                 resp += "Positive:<br>"
                 sentiment_dict['positives'] = ''
+                sentiment_result['positives'] = []
                 for pos in positives:
+                    sentiment_result['positives'].append(pos)
                     pos_text = ''
                     pos_text += "Sentiment: " + pos["sentiment"] + "<br>"
                     resp += "Sentiment: " + pos["sentiment"] + "<br>"
@@ -40,7 +46,9 @@ class SentimentAnalysis(object):
                 negatives = payloadObj["negative"]
                 resp += "Negative:<br>"
                 sentiment_dict['negatives'] = ''
+                sentiment_result['negatives'] = []
                 for neg in negatives:
+                    sentiment_result['negatives'].append(neg)
                     neg_text = ''
                     neg_text += "Sentiment: " + neg["sentiment"] + "<br>"
                     resp += "Sentiment: " + neg["sentiment"] + "<br>"
@@ -68,6 +76,7 @@ class SentimentAnalysis(object):
 
                 resp += aggregate["sentiment"]
         self.results = sentiment_dict
+        self.d = sentiment_result
         print(resp)
 
 

@@ -82,9 +82,27 @@ def journal():
         # at the moment we have 2 dictionaries sentiments and concepts
         # which are unused and we are waiting to find
         #return render_template('thankyou.html')
-        return render_template('journal.html', sentiments=sentiments, concepts=concepts)
+        flag_for_review = None
+        if 'neutral' in sentiments.results['overall']:
+            pos = calc_avg(sentiments.d, "positives")
+            neg = calc_avg(sentiments.d, "negatives")
+            print(pos, neg)
+            if pos > .70 and neg > .70:
+                # pass crazy_person = true
+                # crazyperson.jpg
+                flag_for_review = True
+                print('Watch out for this man')
+        return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review)
     else:
         return render_template('index.html')
+
+def calc_avg(dict, type):
+    print(dict)
+    avg = 0
+    for score in dict[type]:
+        avg += score['score']
+    avg = avg / len(dict[type])
+    return abs(avg)
 
 @app.route('/sentimental', methods=['GET', 'POST'])
 def sentimental():
