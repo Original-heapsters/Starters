@@ -13,7 +13,7 @@ from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
 from pprint import pprint
-import re, os, json, datetime, time
+import re, os, json, datetime, time, csv
 
 keys = KeyLoader.KeyLoader('keys.json')
 
@@ -59,6 +59,17 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == "POST":
+        hodClient = HODClient(hpeID)
+        parser = HODResponseParser()
+        user_ids = request.form['journal_text']
+
+        return render_template('search.html', user_ids)
+
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -101,18 +112,28 @@ def journal():
         return render_template('index.html')
 
 def write_json(text, sentiment, concepts, score, timestamp, id, role):
-    user = {'PlezaDump': {}}
-    user['PlezaDump']['Text'] = text
-    user['PlezaDump']['Sentiment'] = sentiment
-    user['PlezaDump']['Score'] = score
-    user['PlezaDump']['Concepts'] = concepts
-    user['PlezaDump']['TimeStamp'] = timestamp
-    user['PlezaDump']['User_ID'] = id
-    user['PlezaDump']['Role'] = role
+    user = {}
+    user['Text'] = text
+    user['Sentiment'] = sentiment
+    user['Score'] = score
+    user['Concepts'] = concepts
+    user['TimeStamp'] = timestamp
+    user['User_ID'] = id
+    user['Role'] = role
     pprint(user)
 
-    with open('result.json', 'w') as fp:
-        json.dump(user, fp, indent=4, sort_keys=True)
+    # with open('result.json', 'w') as fp:
+    #     json.dump(user, fp, indent=4, sort_keys=True)
+    with open('test.csv', 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(["Text", "Sentiment", "Score", "Concepts", "TimeStamp", "User_ID", "Role"])
+        csv_w.writerow([user['Text'],
+                        user['Sentiment'],
+                        user['Score'],
+                        user['Concepts'],
+                        user['TimeStamp'],
+                        user['User_ID'],
+                        user['Role']])
 
 
 def calc_avg(dict, type):
