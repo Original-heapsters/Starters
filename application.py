@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
 from Scripts import KeyLoader
+from Scripts import Admin_Data
 from oauth import OAuthHelpers
 from Scripts import SentimentAnalysis
 from Scripts import ConceptExtractor
@@ -151,7 +152,12 @@ def feedback():
 
 @app.route('/breakdown')
 def breakdown():
-    return render_template('feedback.html')
+
+    admin = Admin_Data.Admin_Data()
+
+    admin_data = admin.getAdminBreakdown()
+    # Get dynamo info
+    return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
 @app.route('/logout')
 def logout():

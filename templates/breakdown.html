@@ -8,37 +8,41 @@
             <input class="buttonstd" type="submit" value="Submit">
         </form>
 
-        {% if concepts %}
-            {% if concepts.results['errors'] %}
+        {% if admin_data %}
+            {% if admin_data.results['errors'] %}
                 <hr>
                 <h2>Errors :(</h2>
-                <h3>{{ concepts.results['errors'] | safe }}</h3>
+                <h3>{{ admin_data.results['errors'] | safe }}</h3>
                 <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
             {% endif %}
             <hr>
-            <h2>Concept Breakdown</h2>
+            <h2>{{ area }}  Breakdown</h2>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col">Concept</th>
-                            <th scope="col">Number of occurrences</th>
+                            <th scope="col">Cumulative Employee Health</th>
+                            <th scope="col">Cumulative Sentiments</th>
+                            <th scope="col">Cumulative Occurrences</th>
                         </tr>
                     </thead>
-                    {% for concept in concepts.results %}
+                    {% for row in admin_data.results['cumulative_totals'] %}
                         <tr>
                             <td>
-                                {{ concept }}
+                                {{ row['cumulEmpHealth'] }}
                             </td>
                             <td>
-                                {{ concepts.results[concept] }}
+                                {{ row['cumulSentiment'] }}
+                            </td>
+                            <td>
+                                {{ row['cumulOccurances'] }}
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
         {% else %}
-            <img src="/static/concepts.jpg" height="500px" alt="But how does it make you feeel?">
+            <img src="/static/admin.jpg" height="500px" alt="But how does it make you feeel?">
         {% endif %}
     {% else %}
         <h1><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Log in fool!</a></h1>
