@@ -83,8 +83,8 @@ def journal():
         concepts.doPost(text_to_analyze)
         # at the moment we have 2 dictionaries sentiments and concepts
         # which are unused and we are waiting to find
-        return render_template('thankyou.html')
-        #return render_template('journal.html', sentiments=sentiments, concepts=concepts)
+        #return render_template('thankyou.html')
+        return render_template('journal.html', sentiments=sentiments, concepts=concepts)
     else:
         return render_template('index.html')
 
