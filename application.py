@@ -129,7 +129,8 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user['Role'] = role
     pprint(user)
 
-    with open('test.csv', 'w', newline="") as out_file:
+    filename = user['TimeStamp'] + '.csv'
+    with open(filename, 'w', newline="") as out_file:
         csv_w = csv.writer(out_file)
         csv_w.writerow(["Text", "Sentiment", "Score", "Concepts", "TimeStamp", "User_ID", "Role"])
         csv_w.writerow([user['Text'],
@@ -140,7 +141,8 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
                         user['User_ID'],
                         user['Role']])
 
-    csv_to_dict('test.csv')
+    csv_to_dict(filename)
+    send_to_s3(filename)
 
 
 def csv_to_dict(input_file):
