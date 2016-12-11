@@ -63,16 +63,19 @@ def index():
 def journal():
     if request.method == "POST":
         print('posting')
-        journal = None
+        sentiments = None
+        concepts = None
         hodClient = HODClient(hpeID)
         parser = HODResponseParser()
-        journal = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
+        sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
+        concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
         text_to_analyze = request.form['journal_text']
         # split text by punctionation
         text = re.split('[?.,!]', text_to_analyze.lower())
-        journal.doPost(text, 'eng')
+        sentiments.doPost(text, 'eng')
+        concepts.doPost(text_to_analyze)
 
-        return render_template('journal.html', journal=journal)
+        return render_template('journal.html', sentiments=sentiments, concepts=concepts)
     else:
         return render_template('journal.html')
 
@@ -132,7 +135,7 @@ def clarifai():
 
         return render_template('clarifai.html')
 
-@app.route('/feedback')
+@app.route('/feedback', methods=['GET','POST'])
 def feedback():
     return render_template('feedback.html')
 
