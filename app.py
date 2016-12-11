@@ -70,14 +70,18 @@ def journal():
         sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
         concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
         text_to_analyze = request.form['journal_text']
+        if text_to_analyze == "" or len(re.split('[?.,!]', text_to_analyze)) < 4:
+            return render_template('journal.html')
         # split text by punctionation
         text = re.split('[?.,!]', text_to_analyze.lower())
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
-
-        return render_template('journal.html', sentiments=sentiments, concepts=concepts)
+        # at the moment we have 2 dictionaries sentiments and concepts
+        # which are unused and we are waiting to find
+        return render_template('thankyou.html')
+        #return render_template('journal.html', sentiments=sentiments, concepts=concepts)
     else:
-        return render_template('journal.html')
+        return render_template('index.html')
 
 @app.route('/sentimental', methods=['GET', 'POST'])
 def sentimental():
@@ -135,7 +139,11 @@ def clarifai():
 
         return render_template('clarifai.html')
 
-@app.route('/feedback', methods=['GET','POST'])
+@app.route('/thankyou')
+def thankyou():
+    return render_template('thankyou.html')
+
+@app.route('/feedback')
 def feedback():
     return render_template('feedback.html')
 

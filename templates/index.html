@@ -7,10 +7,17 @@
         <h2>Hi, {{ current_user.name }}!</h2>
         <img src="/static/friendly_wave.jpg" alt="Whaddup cuz">
         <!--<h2><a class="buttonstd" width="240px" href="{{ url_for('sentimental') }}">Sentiment Analysis</a></h2>
-        <h2><a class="buttonstd" width="240px" href="{{ url_for('clarifai') }}">Image Analysis</a></h2>-->
+        <h2><a class="buttonstd" width="240px" href="{{ url_for('clarifai') }}">Image Analysis</a></h2>
         <h2><a class="buttonstd" width="240px" href="{{ url_for('conceptual') }}">Concept Extraction</a></h2>
-        <h2><a class="buttonstd" width="240px" href="{{ url_for('journal') }}">Journal</a></h2>
-        <h2><a class="buttonstd" width="240px" href="{{ url_for('feedback') }}">Feedback</a></h2>
+        <h2><a class="buttonstd" width="240px" href="{{ url_for('journal') }}">Journal</a></h2>-->
+        <h2>Tell me how you REALLY feel...</h2>
+        <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
+            <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" cols="75"></textarea>
+            <br>
+
+            <input class="buttonstd" type="submit" value="Submit">
+        </form>
+        <!--<h2><a class="buttonstd" width="240px" href="{{ url_for('feedback') }}">Feedback</a></h2>-->
     {% else %}
         <h2>I don't know you!</h2>
         <img src="/static/suspicious_man.jpg" height="500px" alt="I DONT KNOW YOU">
