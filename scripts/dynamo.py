@@ -37,29 +37,36 @@ class dynamoOps(object):
 
         table = self.setup()
 
-        pe = "User_ID, Concept"
+        pe = "TimeStamp,Text"
 
 
-        response = table.scan(
-            #fe=Key('year').between(1950, 1959);
-            #KeyConditionExpression=Key('TimeStamp').eq('2016')
-            ProjectionExpression=pe
-        )
+        response = table.scan()
+
+        results = {}
+
         for i in response['Items']:
-            print(json.dumps(i, cls=DecimalEncoder))
+            #print(i['Text'])
+            if id in i['Text']:
+                results[i['TimeStamp']] = i['Text']
+                #print('FOUND IT')
+                #print(i['TimeStamp'])
+                #print(i['Text'])
+        return results
 
-        while 'LastEvaluatedKey' in response:
-            response = table.scan(
-                ProjectionExpression=pe,
-                ExclusiveStartKey=response['LastEvaluatedKey']
-            )
+            #print(json.dumps(i, cls=DecimalEncoder))
 
-            for i in response['Items']:
-                print(json.dumps(i, cls=DecimalEncoder))
+        #while 'LastEvaluatedKey' in response:
+        #    response = table.scan(
+        ##        ProjectionExpression=pe,
+        #        ExclusiveStartKey=response['LastEvaluatedKey']
+        #    )#
 
-            return response['Items']
-        else:
-            return None
+         #   for i in response['Items']:
+         #       print(json.dumps(i, cls=DecimalEncoder))
+
+            #return response['Items']
+        #else:
+        #    return None
 
     def addEntry(self, Item):
         table = self.setup()
@@ -71,7 +78,7 @@ class dynamoOps(object):
 if __name__ == '__main__':
     dym = dynamoOps()
 
-    dym.getUserByID('1234')
+    dym.getUserByID('Bob')
 
     Item = {
         'TimeStamp':'2016_1234',
@@ -83,7 +90,7 @@ if __name__ == '__main__':
         'User_ID':'1234'
     }
 
-    dym.addEntry(Item)
+    #dym.addEntry(Item)
 
 
 

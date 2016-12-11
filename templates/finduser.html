@@ -9,7 +9,20 @@
         </form>
 
         {% if userdata %}
-            {{ userdata | safe }}
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <td>TimeStamp</td>
+                        <td>Entry</td>
+                    </thead>
+                    {% for entry in userdata %}
+                        <tr>
+                            <td>{{ entry }}</td>
+                            <td>{{ userdata[entry ]}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         {% else %}
             <h1>No user</h1>
             <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
