@@ -8,7 +8,7 @@ from boto3.docs import client
 from botocore.compat import file_type
 
 
-from Scripts import KeyLoader
+from scripts import KeyLoader
 
 keys = KeyLoader.KeyLoader('../../keys.json')
 awsID, aws_secret = keys.getCredentials('aws')

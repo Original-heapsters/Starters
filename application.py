@@ -5,13 +5,13 @@ from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user,\
     current_user
-from Scripts import KeyLoader
-from Scripts import Admin_Data
-from Scripts import userIds
+from scripts import KeyLoader
+from scripts import Admin_Data
+from scripts import userIds
 from oauth import OAuthHelpers
-from Scripts import SentimentAnalysis
-from Scripts import ConceptExtractor
-from Scripts import dynamo
+from scripts import SentimentAnalysis
+from scripts import ConceptExtractor
+from scripts import dynamo
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
@@ -31,6 +31,7 @@ os.environ['CLARIFAI_APP_SECRET'] = clarifSecret
 clarif = ClarifaiApp()
 
 app = Flask(__name__)
+application = app
 app.config['SECRET_KEY'] = 'top secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['OAUTH_CREDENTIALS'] = {
@@ -261,7 +262,6 @@ def breakdown():
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
-<<<<<<< HEAD
 @app.route('/search/')
 def search():
     ids = userIds.userIds()

@@ -1,5 +1,5 @@
 from botocore.exceptions import ClientError
-from Scripts import KeyLoader
+from scripts import KeyLoader
 import json
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
@@ -21,7 +21,7 @@ class dynamoOps(object):
 
     def setup(self):
 
-        keys = KeyLoader.KeyLoader('../keys.json')
+        keys = KeyLoader.KeyLoader('keys.json')
 
         id,secret = keys.getCredentials('aws')
 

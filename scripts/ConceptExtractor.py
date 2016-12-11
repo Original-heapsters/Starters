@@ -1,4 +1,4 @@
-from Scripts import KeyLoader
+from scripts import KeyLoader
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 
