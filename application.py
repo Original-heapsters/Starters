@@ -49,6 +49,7 @@ class User(UserMixin, db.Model):
     nickname = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=True)
     name = db.Column(db.String(64), nullable=True)
+    role = db.Column(db.String(64), nullable=True)
 
 @lm.user_loader
 def load_user(id):
@@ -136,6 +137,10 @@ def clarifai():
 def feedback():
     return render_template('feedback.html')
 
+@app.route('/breakdown')
+def breakdown():
+    return render_template('feedback.html')
+
 @app.route('/logout')
 def logout():
     logout_user()
@@ -153,15 +158,15 @@ def oauth_callback(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthHelpers.get_provider(provider)
-    social_id, username, email, name = None, None, None, None
-    social_id, username, email, name = oauth.callback()
+    social_id, username, email, name, role = None, None, None, None, None
+    social_id, username, email, name, role = oauth.callback()
 
     if social_id is None:
         flash('Authentication failed.')
         return redirect(url_for('index'))
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
-        user = User(social_id=social_id, nickname=username, email=email, name=name)
+        user = User(social_id=social_id, nickname=username, email=email, name=name, role=role)
         db.session.add(user)
         db.session.commit()
     login_user(user, True)

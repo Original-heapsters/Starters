@@ -4,6 +4,6 @@
         <h2>Thanks for your feedback.</h2>
         <img src="/static/beggar.jpg" height="200px">
         <br>
-        <input class="buttonstd" type="submit" value="Back to home" href="index.html">
+        <a class="buttonstd" type="submit" href=" {{ url_for('index') }}">Back to home</a>
     {% endif %}
 {% endblock %}
