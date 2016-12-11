@@ -9,6 +9,7 @@ from Scripts import Admin_Data
 from oauth import OAuthHelpers
 from Scripts import SentimentAnalysis
 from Scripts import ConceptExtractor
+from Scripts import dynamo
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
@@ -162,6 +163,14 @@ def breakdown():
     admin_data = admin.getAdminBreakdown()
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
+
+@app.route('/finduser')
+def finduser():
+    dyn = dynamo.dynamoOps()
+
+    userdata = dyn.getUserByID('1234')
+
+    return render_template('finduser.html', userdata=userdata)
 
 @app.route('/logout')
 def logout():
