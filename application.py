@@ -118,17 +118,60 @@ def journal():
     else:
         return render_template('index.html')
 
+def write_sentiments(sent,ts):
+    filename = 'sentiments' + ts + '.csv'
+    with open(filename, 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(
+            ["positives", "negatives", "aggregate"])
+        csv_w.writerow([sent['positives'],
+                        sent['negatives']])
+
+    # csv_to_dict(filename)
+    send_to_s3(filename)
+
 def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user = {}
     user['Text'] = text.replace("\""," ").replace("{", " ").replace("}"," ")
     user['Sentiment'] = sentiment
     user['Score'] = score
-    user['ConceptsWords'] = ', '.join(concepts.keys())
-    user['ConceptsCounts'] = ', '.join(str(concepts.values()))
+    user['ConceptsWords'] = ''.join(concepts.keys())
+    user['ConceptsCounts'] = ''.join(str(concepts.values()))
     user['TimeStamp'] = timestamp
     user['User_ID'] = id
     user['Role'] = role
     pprint(user)
+
+
+    write_sentiments(sentiment, user['TimeStamp'])
+
+
+    #filename = 'sentiments' + user['TimeStamp'] + '.csv'
+    #with open(filename, 'w', newline="") as out_file:
+    #    csv_w = csv.writer(out_file)
+    #    csv_w.writerow(
+    #        ["text","positives", "negatives", "aggregate", "User_ID"])
+    #    csv_w.writerow([text,
+    #                    sentiment['positives'],
+    #                    sentiment['negatives'],
+    ##                    score,
+    #                   id])
+
+    # csv_to_dict(filename)
+    #send_to_s3(filename)
+
+    filename = 'concepts' + user['TimeStamp'] + '.csv'
+    with open(filename, 'w', newline="") as out_file:
+        csv_w = csv.writer(out_file)
+        csv_w.writerow(["text", "concept", "count", "User_ID"])
+        for entry in concepts:
+            csv_w.writerow([text,
+                            entry,
+                            concepts[entry],
+                            id])
+
+    # csv_to_dict(filename)
+    send_to_s3(filename)
 
     filename = user['TimeStamp'] + '.csv'
     with open(filename, 'w', newline="") as out_file:
