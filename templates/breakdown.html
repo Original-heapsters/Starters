@@ -26,19 +26,39 @@
                             <th scope="col">Cumulative Occurrences</th>
                         </tr>
                     </thead>
-                    {% for row in admin_data.results['cumulative_totals'] %}
-                        <tr>
-                            <td>
-                                {{ row['cumulEmpHealth'] }}
-                            </td>
-                            <td>
-                                {{ row['cumulSentiment'] }}
-                            </td>
-                            <td>
-                                {{ row['cumulOccurances'] }}
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    <td>
+                        <table>
+                            {% for d in admin_data.results['cumulEmpHealth'] %}
+                                <tr>
+                                    <td>
+                                        HEALTH row  {{ d }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {% for d in admin_data.results['cumulSentiment'] %}
+                                <tr>
+                                    <td>
+                                        HEALTH row  {{ d }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {% for d in admin_data.results['cumulOccurances'] %}
+                                <tr>
+                                    <td>
+                                        HEALTH row  {{ d }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
                 </table>
             </div>
         {% else %}
