@@ -1,41 +1,53 @@
-from boto import dynamodb
-from boto import dynamodb2
-from boto.dynamodb2 import connect_to_region
-from boto.dynamodb2.table import Table
-from Scripts import KeyLoader
-import os
-from boto.dynamodb2.items import Item
-from flask import (
-    _app_ctx_stack as stack,
-)
+from botocore.exceptions import ClientError
+import json
+import boto3
+import decimal
 
+# Helper class to convert a DynamoDB item to JSON.
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            if o % 1 > 0:
+                return float(o)
+            else:
+                return int(o)
+        return super(DecimalEncoder, self).default(o)
 
-keys = KeyLoader.KeyLoader('../../keys.json')
-awsID, aws_secret = keys.getCredentials('aws')
+class dynamoOps(object):
+    def __init__(self, region='us-east-1'):
+        self.region=region
 
+    def setup(self):
 
-os.environ['AWS_APP_ID'] = awsID
-os.environ['AWS_APP_SECRET'] = aws_secret
+        dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
+        table = dynamodb.Table('User_Sentiment')
 
+        return table
 
-conn = dynamodb.connect_to_region(
-        'us-east-1',
-        aws_access_key_id= awsID,
-        aws_secret_access_key= aws_secret)
-print (conn.list_tables())
+    def getUserByID(self, id):
 
+        table = self.setup()
 
+        try:
+            response = table.get_item(
+                Key={
+                    'User_ID': id
+                }
+            )
+        except ClientError as e:
+            print(e.response['Error']['Message'])
 
-usr = Table('User_Sentiment')
-conn.usr.put_item(
-    Item={
-        'User_ID': '123',
-        'Concept': 'happy',
-        'Score': '10',
-        'Sentiment': 'positive'
-    })
+        item = response['Item']
+        print("GetItem succeeded:")
+        print(json.dumps(item, indent=4, cls=DecimalEncoder))
 
+        return item
+
+if __name__ == '__main__':
+    dym = dynamoOps()
+
+    dym.getUserByID('1234')
 
 
 
