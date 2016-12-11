@@ -1,3 +1,4 @@
+import boto
 from flask import Flask, redirect, url_for, render_template, request
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
@@ -19,6 +20,9 @@ keys = KeyLoader.KeyLoader('keys.json')
 fbID, fbSecret = keys.getCredentials('facebook')
 hpeID, hpeSecret = keys.getCredentials('hpe_haven')
 clarifID, clarifSecret = keys.getCredentials('clarifai')
+awsID, aws_secret = keys.getCredentials('aws')
+os.environ['AWS_APP_ID'] = awsID
+os.environ['AWS_APP_SECRET'] = aws_secret
 os.environ['CLARIFAI_APP_ID'] = clarifID
 os.environ['CLARIFAI_APP_SECRET'] = clarifSecret
 clarif = ClarifaiApp()
