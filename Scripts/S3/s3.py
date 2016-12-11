@@ -3,6 +3,8 @@ import socket
 import boto
 import os
 from boto.s3.key import Key
+from boto3.docs import client
+
 from botocore.compat import file_type
 
 
@@ -24,11 +26,14 @@ for bucket in conn.get_all_buckets():
                 name = bucket.name,
                 created = bucket.creation_date,
         ))
-testfile = 'result.csv'
+file = 'result.csv'
 
 bucket1 = conn.get_bucket("elasticbeanstalk-us-east-1-081891355789")
 
 k = Key(bucket1)
-k.key = 'PlezaDump'
 
-k.set_contents_from_filename('result.csv', policy='public-read')
+k.key = '/PlezaDump/'+file
+
+k.set_contents_from_filename(file, policy='public-read')
+
+

@@ -1,4 +1,5 @@
 import boto
+from boto.s3.key import Key
 from flask import Flask, redirect, url_for, render_template, request
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
@@ -139,6 +140,7 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
 
     csv_to_dict('test.csv')
 
+
 def csv_to_dict(input_file):
     user = {}
     user['Text'] = None
@@ -160,6 +162,22 @@ def csv_to_dict(input_file):
         user['User_ID'] = row['User_ID']
         user['Role'] = row['Role']
     pprint(user)
+    send_to_s3(input_file)
+
+def send_to_s3(input_file):
+    conn = boto.connect_s3(
+        aws_access_key_id=awsID,
+        aws_secret_access_key=aws_secret,
+    )
+    testfile = input_file
+
+    bucket1 = conn.get_bucket("elasticbeanstalk-us-east-1-081891355789")
+
+    k = Key(bucket1)
+    k.key = 'PlezaDump/testfile'
+
+    k.set_contents_from_filename(testfile, policy='public-read')
+
 
 def calc_avg(dict, type):
     print(dict)
