@@ -122,8 +122,6 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user['Role'] = role
     pprint(user)
 
-    # with open('result.json', 'w') as fp:
-    #     json.dump(user, fp, indent=4, sort_keys=True)
     with open('test.csv', 'w', newline="") as out_file:
         csv_w = csv.writer(out_file)
         csv_w.writerow(["Text", "Sentiment", "Score", "Concepts", "TimeStamp", "User_ID", "Role"])
@@ -135,6 +133,29 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
                         user['User_ID'],
                         user['Role']])
 
+    csv_to_dict('test.csv')
+
+def csv_to_dict(input_file):
+    user = {}
+    user['Text'] = None
+    user['Sentiment'] = None
+    user['Score'] = None
+    user['Concepts'] = None
+    user['TimeStamp'] = None
+    user['User_ID'] = None
+    user['Role'] = None
+
+    rows = csv.DictReader(open(input_file))
+
+    for row in rows:
+        user['Text'] = row['Text']
+        user['Sentiment'] = row['Sentiment']
+        user['Score'] = row['Score']
+        user['Concepts'] = row['Concepts']
+        user['TimeStamp'] = row['TimeStamp']
+        user['User_ID'] = row['User_ID']
+        user['Role'] = row['Role']
+    pprint(user)
 
 def calc_avg(dict, type):
     print(dict)
