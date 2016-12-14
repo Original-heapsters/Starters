@@ -1,3 +1,6 @@
+from scripts import Sentiment
+from scripts import KeyLoader
+from pprint import pprint
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 
@@ -15,6 +18,18 @@ class SentimentAnalysis(object):
         sentiment_result = {}
         resp = "<br>"
         payloadObj = self.parser.parse_payload(response)
+
+
+
+
+
+        pprint(payloadObj)
+
+
+
+
+
+
         if payloadObj is None:
             errorObj = self.parser.get_last_error()
             sentiment_dict['errors'] = ''
@@ -22,6 +37,14 @@ class SentimentAnalysis(object):
                 sentiment_dict['errors'] += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
                 resp += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
         else:
+
+            sentObj = Sentiment.Sentiment()
+
+            sentObj.understandSentiment(payloadObj)
+            sentObj.printObj()
+
+
+
             app = context["hodapp"]
             if app == HODApps.ANALYZE_SENTIMENT:
                 positives = payloadObj["positive"]
@@ -94,5 +117,12 @@ class SentimentAnalysis(object):
         self.hodClient.post_request(paramArr, hodApp, async=False, callback=self.sentimentRequestCompleted, **context)
 
 if __name__ == '__main__':
-    Sent = SentimentAnalysis()
-    Sent.doPost(['My feet really hurt.', 'This ice cream is freaking amazeballz!', 'Whats the purpose for life really?'],'eng')
+    keys = KeyLoader.KeyLoader('../keys.json')
+
+    fbID, fbSecret = keys.getCredentials('facebook')
+    hpeID, hpeSecret = keys.getCredentials('hpe_haven')
+
+    hodClient = HODClient(hpeID)
+    parser = HODResponseParser()
+    Sent = SentimentAnalysis(hodClient,parser)
+    Sent.doPost(['My feet really hurt.', 'This ice cream is amazing!', 'Whats the purpose for life really?', 'I am unhappy with my job.'],'eng')

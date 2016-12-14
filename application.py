@@ -65,17 +65,6 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
-#
-# @app.route('/search', methods=['GET', 'POST'])
-# def search():
-#     if request.method == "POST":
-#         hodClient = HODClient(hpeID)
-#         parser = HODResponseParser()
-#         user_ids = request.form['journal_text']
-#
-#         return render_template('search.html', user_ids)
-
-
 
 @app.route('/')
 def index():
@@ -100,15 +89,15 @@ def journal():
         concepts.doPost(text_to_analyze)
         #return render_template('thankyou.html')
         flag_for_review = None
-        if 'neutral' in sentiments.results['overall']:
-            pos = calc_avg(sentiments.d, "positives")
-            neg = calc_avg(sentiments.d, "negatives")
-            print(pos, neg)
-            if pos > .70 and neg > .70:
+        #if 'neutral' in sentiments.results['overall']:
+        #    pos = calc_avg(sentiments.d, "positives")
+        #    neg = calc_avg(sentiments.d, "negatives")
+        #    print(pos, neg)
+        #    if pos > .70 and neg > .70:
                 # pass crazy_person = true
                 # crazyperson.jpg
-                flag_for_review = True
-                print('Watch out for this man')
+        #        flag_for_review = True
+        #        print('Watch out for this man')
 
         ts = time.time()
         timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')
@@ -160,9 +149,9 @@ def write_sentiments(sent, agg, ts):
 
 
     # csv_to_dict(filename)
-    send_to_s3(pos_filename)
-    send_to_s3(neg_filename)
-    send_to_s3(agg_filename)
+    #send_to_s3(pos_filename)
+    #send_to_s3(neg_filename)
+    #send_to_s3(agg_filename)
 
 def write_concepts(conc,ts):
     filename = 'concepts' + ts + '.csv'
@@ -173,7 +162,7 @@ def write_concepts(conc,ts):
             csv_w.writerow([x, y])
 
     # csv_to_dict(filename)
-    send_to_s3(filename)
+    #send_to_s3(filename)
 
 def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user = {}
@@ -185,54 +174,6 @@ def write_json(text, sentiment, concepts, score, timestamp, id, role):
     user['TimeStamp'] = timestamp
     user['User_ID'] = id
     user['Role'] = role
-    pprint(user)
-
-
-    write_sentiments(sentiment, score, user['TimeStamp'])
-
-
-    #filename = 'sentiments' + user['TimeStamp'] + '.csv'
-    #with open(filename, 'w', newline="") as out_file:
-    #    csv_w = csv.writer(out_file)
-    #    csv_w.writerow(
-    #        ["text","positives", "negatives", "aggregate", "User_ID"])
-    #    csv_w.writerow([text,
-    #                    sentiment['positives'],
-    #                    sentiment['negatives'],
-    ##                    score,
-    #                   id])
-
-    # csv_to_dict(filename)
-    #send_to_s3(filename)
-    write_concepts(concepts, user['TimeStamp'])
-    # filename = 'concepts' + user['TimeStamp'] + '.csv'
-    # with open(filename, 'w', newline="") as out_file:
-    #     csv_w = csv.writer(out_file)
-    #     csv_w.writerow(["text", "concept", "count", "User_ID"])
-    #     for entry in concepts:
-    #         csv_w.writerow([text,
-    #                         entry,
-    #                         concepts[entry],
-    #                         id])
-
-    # csv_to_dict(filename)
-    # send_to_s3(filename)
-
-    filename = user['TimeStamp'] + '.csv'
-    with open(filename, 'w', newline="") as out_file:
-        csv_w = csv.writer(out_file)
-        csv_w.writerow(["Text", "Sentiment", "Score", "ConceptsWords", "ConceptsCounts","TimeStamp", "User_ID", "Role"])
-        csv_w.writerow([user['Text'],
-                        user['Sentiment'],
-                        user['Score'],
-                        user['ConceptsWords'],
-                        user['ConceptsCounts'],
-                        user['TimeStamp'],
-                        user['User_ID'],
-                        user['Role']])
-
-    #csv_to_dict(filename)
-    send_to_s3(filename)
 
 
 def csv_to_dict(input_file):
@@ -270,9 +211,9 @@ def csv_to_dict(input_file):
 
     dym.addEntry(entry)
 
-    send_to_s3(input_file)
+    #send_to_s3(input_file)
 
-def send_to_s3(input_file):
+def send_to_s3(input_file, location):
     conn = boto.connect_s3(
         aws_access_key_id=awsID,
         aws_secret_access_key=aws_secret,
@@ -282,18 +223,9 @@ def send_to_s3(input_file):
     bucket1 = conn.get_bucket("elasticbeanstalk-us-east-1-081891355789")
 
     k = Key(bucket1)
-    k.key = 'PlezaDump/'+ input_file + '.csv'
-
+    k.key = location + '/'+ input_file
     k.set_contents_from_filename(testfile, policy='public-read')
 
-
-def calc_avg(dict, type):
-    print(dict)
-    avg = 0
-    for score in dict[type]:
-        avg += score['score']
-    avg = avg / len(dict[type])
-    return abs(avg)
 
 @app.route('/sentimental', methods=['GET', 'POST'])
 def sentimental():
@@ -329,35 +261,9 @@ def conceptual():
     else:
         return render_template('conceptual.html')
 
-@app.route('/clarifai', methods=['GET','POST'])
-def clarifai():
-    if request.method == "POST":
-        tags = ''
-        link_to_tag = request.form['image_url']
-        tags = clarif.tag_urls([link_to_tag])
-        pprint(tags)
-        output = tags['outputs']
-
-        data = output[0]['data']
-        print (data)
-        concepts = data['concepts']
-
-        tag_list = ''
-        for tag in concepts:
-            tag_list += tag['name'] + ', '
-
-        return render_template('clarifai.html', original_image=request.form['image_url'],tags=tag_list)
-    else:
-
-        return render_template('clarifai.html')
-
 @app.route('/thankyou')
 def thankyou():
     return render_template('thankyou.html')
-
-@app.route('/feedback')
-def feedback():
-    return render_template('feedback.html')
 
 @app.route('/breakdown')
 def breakdown():
@@ -368,16 +274,7 @@ def breakdown():
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
-@app.route('/search/')
-def search():
-    ids = userIds.userIds()
-    user_ids= ids.getuserIds()
-    return render_template('search.html', user_ids=ids)
 
-@app.route("/search/<useridstr>/")
-def userpage(useridstr):
-    # show the user profile for that user
-    return render_template('index.html')
 
 @app.route('/finduser', methods=['GET','POST'])
 def finduser():

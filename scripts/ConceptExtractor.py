@@ -1,4 +1,6 @@
 from scripts import KeyLoader
+import pprint
+from scripts import Concept
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 
@@ -13,13 +15,21 @@ class ConceptExtractor(object):
         concept_dict = {}
         resp = "<br>"
         payloadObj = self.parser.parse_payload(response)
-        print('Parseing')
+        print('Parsing')
+
         if payloadObj is None:
             errorObj = self.parser.get_last_error()
             for err in errorObj.errors:
                 resp += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
                 print(resp)
         else:
+
+            #pprint(payloadObj)
+            con = Concept.Concept()
+
+            con.understandConcept(payloadObj)
+            con.printObj()
+
             app = context["hodapp"]
             if app == HODApps.EXTRACT_CONCEPTS:
                 print("In apppppp")
