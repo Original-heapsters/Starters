@@ -1,13 +1,9 @@
-import boto
-from boto.s3.key import Key
 from flask import Flask, redirect, url_for, render_template, request
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, logout_user,\
-    current_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
 from scripts import KeyLoader
 from scripts import Admin_Data
-from scripts import userIds
 from oauth import OAuthHelpers
 from scripts import SentimentAnalysis
 from scripts import ConceptExtractor
@@ -15,8 +11,7 @@ from scripts import dynamo
 from havenondemand.hodclient import *
 from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
-from pprint import pprint
-import re, os, json, datetime, time, csv
+import re, os, datetime, time
 
 keys = KeyLoader.KeyLoader('keys.json')
 
@@ -65,39 +60,37 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
-
+##################  INDEX  ##################
 @app.route('/')
 def index():
     return render_template('index.html')
 
+##################  Journal  ##################
 @app.route('/journal', methods=['GET', 'POST'])
 def journal():
     if request.method == "POST":
-        print('posting')
         sentiments = None
         concepts = None
         hodClient = HODClient(hpeID)
         parser = HODResponseParser()
+
         sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
         concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
+
         text_to_analyze = request.form['journal_text']
+
         if text_to_analyze == "" or len(re.split('[?.,!]', text_to_analyze)) < 4:
             return render_template('journal.html')
+
         # split text by punctionation
         text = re.split('[?.,!]', text_to_analyze.lower())
+
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
+
+        flag_for_review = True
+
         #return render_template('thankyou.html')
-        flag_for_review = None
-        #if 'neutral' in sentiments.results['overall']:
-        #    pos = calc_avg(sentiments.d, "positives")
-        #    neg = calc_avg(sentiments.d, "negatives")
-        #    print(pos, neg)
-        #    if pos > .70 and neg > .70:
-                # pass crazy_person = true
-                # crazyperson.jpg
-        #        flag_for_review = True
-        #        print('Watch out for this man')
 
         ts = time.time()
         timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')
@@ -107,164 +100,12 @@ def journal():
     else:
         return render_template('index.html')
 
-def write_sentiments(sent, agg, ts):
-    pos_filename = 'possentiments' + ts + '.csv'
-    with open(pos_filename, 'w', newline="") as out_file:
-        csv_w = csv.writer(out_file)
-        csv_w.writerow(
-            ["documentIndex", "normalized_length", "normalized_text", "original_length", "original_text", "score",
-             "sentiment", "topic"])
-        for x in sent['positives']:
-            csv_w.writerow([x['documentIndex'],
-                            x['normalized_length'],
-                            x['normalized_text'],
-                            x['original_length'],
-                            x['original_text'],
-                            x['score'],
-                            x['sentiment'],
-                            x['topic']])
-
-    neg_filename = 'negsentiments' + ts + '.csv'
-    with open(neg_filename, 'w', newline="") as out_file:
-        csv_w = csv.writer(out_file)
-        csv_w.writerow(
-            ["documentIndex", "normalized_length", "normalized_text", "original_length", "original_text", "score",
-             "sentiment", "topic"])
-        for x in sent['negatives']:
-            csv_w.writerow([x['documentIndex'],
-                            x['normalized_length'],
-                            x['normalized_text'],
-                            x['original_length'],
-                            x['original_text'],
-                            x['score'],
-                            x['sentiment'],
-                            x['topic']])
-
-    agg_filename = 'aggsentiments' + ts + '.csv'
-    with open(agg_filename, 'w', newline="") as out_file:
-        csv_w = csv.writer(out_file)
-        csv_w.writerow(["sentiment", "score"])
-        csv_w.writerow([agg['sentiment'],
-                        agg['score']])
-
-
-    # csv_to_dict(filename)
-    #send_to_s3(pos_filename)
-    #send_to_s3(neg_filename)
-    #send_to_s3(agg_filename)
-
-def write_concepts(conc,ts):
-    filename = 'concepts' + ts + '.csv'
-    with open(filename, 'w', newline="") as out_file:
-        csv_w = csv.writer(out_file)
-        csv_w.writerow(["concept", "occurrence"])
-        for x,y in conc.items():
-            csv_w.writerow([x, y])
-
-    # csv_to_dict(filename)
-    #send_to_s3(filename)
-
-def write_json(text, sentiment, concepts, score, timestamp, id, role):
-    user = {}
-    user['Text'] = text.replace("\""," ").replace("{", " ").replace("}"," ")
-    user['Sentiment'] = sentiment
-    user['Score'] = score['score']
-    user['ConceptsWords'] = ''.join(concepts.keys())
-    user['ConceptsCounts'] = ''.join(str(concepts.values()))
-    user['TimeStamp'] = timestamp
-    user['User_ID'] = id
-    user['Role'] = role
-
-
-def csv_to_dict(input_file):
-    user = {}
-    user['Text'] = None
-    user['Sentiment'] = None
-    user['Score'] = None
-    user['Concepts'] = None
-    user['TimeStamp'] = None
-    user['User_ID'] = None
-    user['Role'] = None
-
-    rows = csv.DictReader(open(input_file))
-
-    for row in rows:
-        user['Text'] = row['Text']
-        user['Sentiment'] = row['Sentiment']
-        user['Score'] = row['Score']
-        user['Concepts'] = row['Concepts']
-        user['TimeStamp'] = row['TimeStamp']
-        user['User_ID'] = row['User_ID']
-        user['Role'] = row['Role']
-    pprint(user)
-    entry = {
-    'TimeStamp': user['TimeStamp'],
-    'Concept': user['Concepts'],
-    'Role': user['Role'],
-    'Score': user['Score'],
-    'Sentiment': user['Sentiment'],
-    'Text': user['Text'],
-    'User_ID': '1234'
-    }
-
-    dym = dynamo.dynamoOps()
-
-    dym.addEntry(entry)
-
-    #send_to_s3(input_file)
-
-def send_to_s3(input_file, location):
-    conn = boto.connect_s3(
-        aws_access_key_id=awsID,
-        aws_secret_access_key=aws_secret,
-    )
-    testfile = input_file
-
-    bucket1 = conn.get_bucket("elasticbeanstalk-us-east-1-081891355789")
-
-    k = Key(bucket1)
-    k.key = location + '/'+ input_file
-    k.set_contents_from_filename(testfile, policy='public-read')
-
-
-@app.route('/sentimental', methods=['GET', 'POST'])
-def sentimental():
-    if request.method == "POST":
-        print('posting')
-        sentiments = None
-        hodClient = HODClient(hpeID)
-        parser = HODResponseParser()
-        sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
-        text_to_analyze = request.form['sentiment_text']
-        # split text by punctionation
-        text = re.split('[?.,!]', text_to_analyze)
-        sentiments.doPost(text, 'eng')
-
-        return render_template('sentimental.html', sentiments=sentiments)
-    else:
-        return render_template('sentimental.html')
-
-@app.route('/conceptual', methods=['GET', 'POST'])
-def conceptual():
-    if request.method == "POST":
-        print('posting')
-        concepts = None
-        hodClient = HODClient(hpeID)
-        parser = HODResponseParser()
-        concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
-        text_to_analyze = request.form['concept_text']
-        # split text by punctionation
-        concepts.doPost(text_to_analyze)
-
-
-        return render_template('conceptual.html', concepts=concepts)
-    else:
-        return render_template('conceptual.html')
-
+##################  THANKS ##################
 @app.route('/thankyou')
 def thankyou():
     return render_template('thankyou.html')
 
+################## BREAKDOWN  ##################
 @app.route('/breakdown')
 def breakdown():
 
@@ -274,9 +115,8 @@ def breakdown():
     # Get dynamo info
     return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
 
-
-
-@app.route('/finduser', methods=['GET','POST'])
+##################  FIND USER  ##################
+@app.route('/finduser', methods=['GET', 'POST'])
 def finduser():
     dyn = dynamo.dynamoOps()
 
@@ -287,12 +127,13 @@ def finduser():
 
     return render_template('finduser.html', userdata=userdata)
 
-
+##################  LOGOUT  ##################
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
+################## OAUTH  ##################
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
     if not current_user.is_anonymous:
@@ -300,6 +141,7 @@ def oauth_authorize(provider):
     oauth = OAuthHelpers.get_provider(provider)
     return oauth.authorize()
 
+##################  Callback from OAuth  ##################
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous:
@@ -319,9 +161,17 @@ def oauth_callback(provider):
     login_user(user, True)
     return redirect(url_for('index'))
 
-
-
-
+##################  AUX  ##################
+def write_json(text, sentiment, concepts, score, timestamp, id, role):
+    user = {}
+    user['Text'] = text.replace("\""," ").replace("{", " ").replace("}"," ")
+    user['Sentiment'] = sentiment
+    user['Score'] = score['score']
+    user['ConceptsWords'] = ''.join(concepts.keys())
+    user['ConceptsCounts'] = ''.join(str(concepts.values()))
+    user['TimeStamp'] = timestamp
+    user['User_ID'] = id
+    user['Role'] = role
 
 if __name__ == '__main__':
     db.create_all()

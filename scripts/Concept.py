@@ -28,6 +28,7 @@ class Concept(object):
                                 str(con['occurrences']),
                                 timestamp])
         self.send_to_s3(concepts_filename,'Pleza_Concepts')
+        os.remove(concepts_filename)
 
     def printObj(self):
         print("Concepts__________________________")

@@ -63,6 +63,7 @@ class Sentiment(object):
                                 timestamp])
 
         self.send_to_s3(sentiments_filename,'Pleza_Sentiments')
+        os.remove(sentiments_filename)
 
         agg_filename = 'aggSentiments_' + timestamp + '_.csv'
         with open(agg_filename, 'w', newline="") as out_file:
@@ -73,6 +74,7 @@ class Sentiment(object):
                 [self.aggregate['sentiment'], self.aggregate['score'], timestamp])
 
         self.send_to_s3(agg_filename, 'Pleza_Aggregate')
+        os.remove(agg_filename)
 
 
 
