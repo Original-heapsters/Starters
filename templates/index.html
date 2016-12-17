@@ -28,17 +28,12 @@
                 {% if 'admin' in current_user.role %}
                     <nav>
                         <a class="w3-btn w3-blue" width="240px" href="https://us-east-1.quicksight.aws.amazon.com/sn/analyses/d7482739-293e-4f63-aec2-1544c2e8cecf"  target="_blank">View Breakdown</a>
-                        <a class="w3-btn w3-blue" width="240px" href="{{ url_for('finduser') }}"  >Find posts about...</a>
+                        <a class="w3-btn w3-blue" width="240px" href="{{ url_for('findphrase') }}"  >Find posts about...</a>
                     </nav>
                 {% endif %}
             </footer>
             </div>
-        {% else %}
-            <h2>Please Login</h2>
-            <img src="/static/suspicious_man1.jpg" height="500px" alt="Login">
-        {% endif %}
-
-        </div>
+            </div>
         </center>
         </div>
 
@@ -57,5 +52,10 @@
 
         </div>
         </div>
-
+        {% else %}
+            <center>
+                <h2>Please Login</h2>
+                <img src="/static/suspicious_man1.jpg" height="500px" alt="Login">
+            </center>
+        {% endif %}
 {% endblock %}

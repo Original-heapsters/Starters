@@ -39,8 +39,8 @@
                           <h1>Search Entries</h1>
                         </header>
                         <div class="w3-container">
-                            <form action="{{ url_for('finduser') }}" id="find_form" method="Post">
-                                <input name="finduserid" type="text" form="find_form" placeholder="Enter text here..."/>
+                            <form action="{{ url_for('findphrase') }}" id="find_form" method="Post">
+                                <input name="findphrase" type="text" form="find_form" placeholder="Enter text here..."/>
                                 <br>
                                 <input class="w3-btn w3-blue" type="submit" value="Search">
                             </form>

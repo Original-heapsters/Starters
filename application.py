@@ -3,7 +3,6 @@ from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
 from scripts import KeyLoader
-from scripts import Admin_Data
 from oauth import OAuthHelpers
 from scripts import SentimentAnalysis
 from scripts import ConceptExtractor
@@ -13,6 +12,8 @@ from havenondemand.hodresponseparser import *
 from clarifai.rest import ClarifaiApp
 import re, os, datetime, time
 
+
+##################  Setup api keys  ##################
 keys = KeyLoader.KeyLoader('keys.json')
 
 fbID, fbSecret = keys.getCredentials('facebook')
@@ -25,6 +26,8 @@ os.environ['CLARIFAI_APP_ID'] = clarifID
 os.environ['CLARIFAI_APP_SECRET'] = clarifSecret
 clarif = ClarifaiApp()
 
+
+##################  Setup application & Oauth  ##################
 app = Flask(__name__)
 application = app
 app.config['SECRET_KEY'] = 'top secret!'
@@ -41,12 +44,12 @@ app.config['OAUTH_CREDENTIALS'] = {
 
     }
 
+##################  Connect db with app  ##################
 db = SQLAlchemy(app)
 lm = LoginManager(app)
-
 lm.login_view = 'index'
 
-
+##################  Internal User Definition  ##################
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -56,6 +59,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64), nullable=True)
     role = db.Column(db.String(64), nullable=True)
 
+##################  Load user  ##################
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
@@ -68,7 +72,10 @@ def index():
 ##################  Journal  ##################
 @app.route('/journal', methods=['GET', 'POST'])
 def journal():
+
+    #Received data
     if request.method == "POST":
+
         sentiments = None
         concepts = None
         hodClient = HODClient(hpeID)
@@ -79,53 +86,44 @@ def journal():
 
         text_to_analyze = request.form['journal_text']
 
-        if text_to_analyze == "" or len(re.split('[?.,!]', text_to_analyze)) < 4:
-            return render_template('journal.html')
-
         # split text by punctionation
         text = re.split('[?.,!]', text_to_analyze.lower())
 
+        # No text was provided or only wrote <3 sentences
+        # This encourages people to write more just to get more of that sweet sweet data
+        if text_to_analyze == "" or len(text) < 4:
+            return render_template('journal.html')
+
+        # Send the hpe sentiment & concept request
         sentiments.doPost(text, 'eng')
         concepts.doPost(text_to_analyze)
 
         flag_for_review = True
 
-        #return render_template('thankyou.html')
-
         ts = time.time()
-        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d_%H%M%S')
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%d/%m/%Y_%H:%M:%S')
 
         write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate, timestamp, '1234','dev')
         return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review)
+
+    # No data received
     else:
         return render_template('index.html')
 
-##################  THANKS ##################
-@app.route('/thankyou')
-def thankyou():
-    return render_template('thankyou.html')
-
-################## BREAKDOWN  ##################
-@app.route('/breakdown')
-def breakdown():
-
-    admin = Admin_Data.Admin_Data()
-
-    admin_data = admin.getAdminBreakdown()
-    # Get dynamo info
-    return render_template('breakdown.html', admin_data=admin, area='JANITORIAL')
-
 ##################  FIND USER  ##################
-@app.route('/finduser', methods=['GET', 'POST'])
-def finduser():
-    dyn = dynamo.dynamoOps()
+@app.route('/findphrase', methods=['GET', 'POST'])
+def findphrase():
 
+    # Received a search phrase
     if request.method == 'POST':
-        userdata = dyn.getUserByID(request.form['finduserid'])
-    else:
-        userdata = None
+        dyn = dynamo.dynamoOps()
+        userdata = dyn.getUserByID(request.form['findphrase'])
 
-    return render_template('finduser.html', userdata=userdata)
+        return render_template('findphrase.html', userdata=userdata)
+
+    # No search received
+    else:
+        return render_template('findphrase.html')
 
 ##################  LOGOUT  ##################
 @app.route('/logout')
