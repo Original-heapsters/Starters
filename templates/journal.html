@@ -1,68 +1,75 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if current_user.is_authenticated %}
-        {% if concepts and sentiments %}
-            <!-- Main content -->
-            <div class="float-left-area">
-                <center>
-                    <div class="inner-left">
-                        {% if concepts.results['errors'] or sentiments.results['errors'] %}
-                            <hr>
-                            <h2>Errors :(</h2>
-                            <h3>{{ concepts.results['errors'] | safe }}</h3>
-                            <h3>{{ sentiments.results['errors'] | safe }}</h3>
-                            <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
-                        {% endif %}
+        <!-- Main content -->
+        <div class="float-left-area">
+            <center>
+                <div class="inner-left">
+    {% if concepts and sentiments %}
+                    {% if concepts.results['errors'] or sentiments.results['errors'] %}
                         <hr>
-                        <h2>Overall sentiment</h2>
-                        <h3>{{ sentiments.results['overall'] | safe }}</h3>
-                        {% if 'neutral' in sentiments.results['overall'] %}
-                            <img src="/static/bored.jpg" height="500px" alt="Is that all youve got?">
-                        {% endif %}
-                        {% if 'positive' in sentiments.results['overall'] %}
-                            <img src="/static/positive1.png" height="500px" alt="Oh Yiissss!">
-                        {% endif %}
-                        {% if 'negative' in sentiments.results['overall'] %}
-                            <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
-                        {% endif %}
-                        {% if sentiments.results['positives'] %}
-                            <hr>
-                            <h2>Positives :)</h2>
-                            {{ sentiments.results['positives'] | safe }}
-                            <hr>
-                        {% endif %}
-                        {% if sentiments.results['negatives'] %}
-                            <hr>
-                            <h2>Negatives >:(</h2>
-                            {{ sentiments.results['negatives'] | safe }}
-                        {% endif %}
-                        <h2>Concept Breakdown</h2>
-                            <div style="overflow-x:auto;">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Concept</th>
-                                            <th scope="col">Number of occurrences</th>
-                                        </tr>
-                                    </thead>
-                                    {% for concept in concepts.results %}
-                                        <tr>
-                                            <td>
-                                                {{ concept }}
-                                            </td>
-                                            <td>
-                                                {{ concepts.results[concept] }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </div>
+                        <h2>Errors :(</h2>
+                        <h3>{{ concepts.results['errors'] | safe }}</h3>
+                        <h3>{{ sentiments.results['errors'] | safe }}</h3>
+                        <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
+                    {% endif %}
+                    <hr>
+                    <h2>Overall sentiment</h2>
+                    <h3>{{ sentiments.results['overall'] | safe }}</h3>
+                    {% if 'neutral' in sentiments.results['overall'] %}
+                        <img src="/static/bored.jpg" height="500px" alt="Is that all youve got?">
+                    {% endif %}
+                    {% if 'positive' in sentiments.results['overall'] %}
+                        <img src="/static/positive1.png" height="500px" alt="Oh Yiissss!">
+                    {% endif %}
+                    {% if 'negative' in sentiments.results['overall'] %}
+                        <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
+                    {% endif %}
+                    {% if sentiments.results['positives'] %}
+                        <hr>
+                        <h2>Positives :)</h2>
+                        {{ sentiments.results['positives'] | safe }}
+                        <hr>
+                    {% endif %}
+                    {% if sentiments.results['negatives'] %}
+                        <hr>
+                        <h2>Negatives >:(</h2>
+                        {{ sentiments.results['negatives'] | safe }}
+                    {% endif %}
+                    <h2>Concept Breakdown</h2>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Concept</th>
+                                        <th scope="col">Number of occurrences</th>
+                                    </tr>
+                                </thead>
+                                {% for concept in concepts.results %}
+                                    <tr>
+                                        <td>
+                                            {{ concept }}
+                                        </td>
+                                        <td>
+                                            {{ concepts.results[concept] }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
         {% else %}
-            <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
-        {% endif %}
+                    <div class="w3-card-4" style="width:50%;">
+                        <header class="w3-container w3-blue">
+                          <h1>I couldnt analyze what you typed!</h1>
+                        </header>
+                        <div class="w3-container">
+                            <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
+                        </div>
                     </div>
-                </center>
-            </div>
+        {% endif %}
+                </div>
+            </center>
+        </div>
         <!-- Side bar -->
         <div class="float-right-area">
             <center>

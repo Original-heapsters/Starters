@@ -1,32 +1,54 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if current_user.is_authenticated %}
-        <h2>Search Entries</h2>
-        <form action="{{ url_for('finduser') }}" id="find_form" method="Post">
-            <input name="finduserid" form="find_form" placeholder="Enter text here..."></input>
-            <br>
-            <input class="buttonstd" type="submit" value="Submit">
-        </form>
+        <!-- Main content -->
+        <div class="float-left-area">
+            <center>
+                <div class="inner-left">
+                    {% if userdata %}
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>TimeStamp</th>
+                                        <th>Entry</th>
+                                    </tr>
+                                </thead>
+                                {% for entry in userdata %}
+                                    <tr>
+                                        <td>{{ entry }}</td>
+                                        <td>{{ userdata[entry ]}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    {% else %}
+                        <h1>No entries found.</h1>
+                        <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
+                    {% endif %}
+                </div>
+            </center>
+        </div>
 
-        {% if userdata %}
-            <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <td>TimeStamp</td>
-                        <td>Entry</td>
-                    </thead>
-                    {% for entry in userdata %}
-                        <tr>
-                            <td>{{ entry }}</td>
-                            <td>{{ userdata[entry ]}}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        {% else %}
-            <h1>No entries found.</h1>
-            <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
-        {% endif %}
+        <!-- Side bar -->
+        <div class="float-right-area">
+            <center>
+                <div class="inner-right">
+                    <div class="w3-card-4" style="width:50%;">
+                        <header class="w3-container w3-blue">
+                          <h1>Search Entries</h1>
+                        </header>
+                        <div class="w3-container">
+                            <form action="{{ url_for('finduser') }}" id="find_form" method="Post">
+                                <input name="finduserid" type="text" form="find_form" placeholder="Enter text here..."/>
+                                <br>
+                                <input class="w3-btn w3-blue" type="submit" value="Search">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
     {% else %}
         <h1><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Log in fool!</a></h1>
         <img src="/static/loginplz.jpg" height="500px" alt="LOGINNNN">
