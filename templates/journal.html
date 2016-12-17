@@ -1,68 +1,87 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if current_user.is_authenticated %}
-        <h2>No really, how you REALLY feel...</h2>
-        <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
-            <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" cols="75"></textarea>
-            <br>
-            <input class="buttonstd" type="submit" value="Submit">
-        </form>
-
         {% if concepts and sentiments %}
-            {% if concepts.results['errors'] or sentiments.results['errors'] %}
-                <hr>
-                <h2>Errors :(</h2>
-                <h3>{{ concepts.results['errors'] | safe }}</h3>
-                <h3>{{ sentiments.results['errors'] | safe }}</h3>
-                <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
-            {% endif %}
-            <hr>
-            <h2>Overall sentiment</h2>
-            <h3>{{ sentiments.results['overall'] | safe }}</h3>
-            {% if 'neutral' in sentiments.results['overall'] %}
-                <img src="/static/bored.jpg" height="500px" alt="Is that all youve got?">
-            {% endif %}
-            {% if 'positive' in sentiments.results['overall'] %}
-                <img src="/static/positive1.png" height="500px" alt="Oh Yiissss!">
-            {% endif %}
-            {% if 'negative' in sentiments.results['overall'] %}
-                <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
-            {% endif %}
-            {% if sentiments.results['positives'] %}
-                <hr>
-                <h2>Positives :)</h2>
-                {{ sentiments.results['positives'] | safe }}
-                <hr>
-            {% endif %}
-            {% if sentiments.results['negatives'] %}
-                <hr>
-                <h2>Negatives >:(</h2>
-                {{ sentiments.results['negatives'] | safe }}
-            {% endif %}
-            <h2>Concept Breakdown</h2>
-            <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">Concept</th>
-                            <th scope="col">Number of occurrences</th>
-                        </tr>
-                    </thead>
-                    {% for concept in concepts.results %}
-                        <tr>
-                            <td>
-                                {{ concept }}
-                            </td>
-                            <td>
-                                {{ concepts.results[concept] }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
+            <!-- Main content -->
+            <div class="float-left-area">
+                <center>
+                    <div class="inner-left">
+                        {% if concepts.results['errors'] or sentiments.results['errors'] %}
+                            <hr>
+                            <h2>Errors :(</h2>
+                            <h3>{{ concepts.results['errors'] | safe }}</h3>
+                            <h3>{{ sentiments.results['errors'] | safe }}</h3>
+                            <img src="/static/oops.jpg" height="500px" alt="You dun broked it.">
+                        {% endif %}
+                        <hr>
+                        <h2>Overall sentiment</h2>
+                        <h3>{{ sentiments.results['overall'] | safe }}</h3>
+                        {% if 'neutral' in sentiments.results['overall'] %}
+                            <img src="/static/bored.jpg" height="500px" alt="Is that all youve got?">
+                        {% endif %}
+                        {% if 'positive' in sentiments.results['overall'] %}
+                            <img src="/static/positive1.png" height="500px" alt="Oh Yiissss!">
+                        {% endif %}
+                        {% if 'negative' in sentiments.results['overall'] %}
+                            <img src="/static/negative.jpg" height="500px" alt="Oh Noez!">
+                        {% endif %}
+                        {% if sentiments.results['positives'] %}
+                            <hr>
+                            <h2>Positives :)</h2>
+                            {{ sentiments.results['positives'] | safe }}
+                            <hr>
+                        {% endif %}
+                        {% if sentiments.results['negatives'] %}
+                            <hr>
+                            <h2>Negatives >:(</h2>
+                            {{ sentiments.results['negatives'] | safe }}
+                        {% endif %}
+                        <h2>Concept Breakdown</h2>
+                            <div style="overflow-x:auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Concept</th>
+                                            <th scope="col">Number of occurrences</th>
+                                        </tr>
+                                    </thead>
+                                    {% for concept in concepts.results %}
+                                        <tr>
+                                            <td>
+                                                {{ concept }}
+                                            </td>
+                                            <td>
+                                                {{ concepts.results[concept] }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
         {% else %}
             <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
         {% endif %}
+                    </div>
+                </center>
+            </div>
+        <!-- Side bar -->
+        <div class="float-right-area">
+            <center>
+                <div class="inner-right">
+                    <div class="w3-card-4" style="width:100%;">
+                        <header class="w3-container w3-blue">
+                            <h2>Add more?</h2>
+                        </header>
+                        <div class="w3-container">
+                            <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
+                                <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" style="width:90%;"></textarea>
+                                <br>
+                                <input class="w3-btn w3-blue" type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
     {% else %}
         <h1><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Log in fool!</a></h1>
         <img src="/static/loginplz.jpg" height="500px" alt="LOGINNNN">
