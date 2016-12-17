@@ -4,22 +4,58 @@
         <p><b>Error</b>: {{ message }}</p>
     {% endfor %}
     {% if current_user.is_authenticated %}
-        <h2>Hi, {{ current_user.name }}!</h2>
-        <img src="/static/friendly_wave1.jpg" alt="Welcome" >
-        <h2>Tell me how you REALLY feel...</h2>
-        <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
-            <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" cols="75"></textarea>
-            <br>
-            <h2><input class="buttonstd" width="240px" type="submit" value="Submit"></h2>
-        </form>
-        {% if 'admin' in current_user.role %}
-			<nav>
-				<a class="buttonstd" width="240px" href="https://us-east-1.quicksight.aws.amazon.com/sn/analyses/d7482739-293e-4f63-aec2-1544c2e8cecf"  target="_blank">View Breakdown</a>
-            	<a class="buttonstd" width="240px" href="{{ url_for('finduser') }}"  >Find User</a>
-			</nav>
+
+        <!-- Main content -->
+        <div class="float-left-area">
+            <center>
+        <div class="inner-left">
+
+
+            <h2>Hi, {{ current_user.name }}!</h2>
+            <img src="/static/friendly_wave1.jpg" alt="Welcome" >
+            <div class="w3-card-4" style="width:50%;">
+            <header class="w3-container w3-blue">
+              <h1>Tell me how you REALLY feel...</h1>
+            </header>
+            <div class="w3-container">
+                <form action="{{ url_for('journal') }}" id="journal_form" method="Post">
+                    <textarea name="journal_text" form="journal_form" placeholder="Enter text here..." rows="7" style="width:90%"></textarea>
+                    <br>
+                    <h2><input class="w3-btn w3-blue" width="240px" type="submit" value="Submit"></h2>
+                </form>
+            </div>
+            <footer class="w3-container w3-blue">
+                {% if 'admin' in current_user.role %}
+                    <nav>
+                        <a class="w3-btn w3-blue" width="240px" href="https://us-east-1.quicksight.aws.amazon.com/sn/analyses/d7482739-293e-4f63-aec2-1544c2e8cecf"  target="_blank">View Breakdown</a>
+                        <a class="w3-btn w3-blue" width="240px" href="{{ url_for('finduser') }}"  >Find posts about...</a>
+                    </nav>
+                {% endif %}
+            </footer>
+            </div>
+        {% else %}
+            <h2>Please Login</h2>
+            <img src="/static/suspicious_man1.jpg" height="500px" alt="Login">
         {% endif %}
-    {% else %}
-        <h2>Please Login</h2>
-        <img src="/static/suspicious_man1.jpg" height="500px" alt="Login">
-    {% endif %}
+
+        </div>
+        </center>
+        </div>
+
+        <!-- Side bar -->
+        <div class="float-right-area">
+        <div class="inner-right">
+
+            <div class="w3-card-4" style="width:50%;">
+            <header class="w3-container w3-blue">
+              <h1>I really love...</h1>
+            </header>
+            <div class="w3-container">
+                <h3>Some inspirational post about good things</h3>
+            </div>
+            </div>
+
+        </div>
+        </div>
+
 {% endblock %}
