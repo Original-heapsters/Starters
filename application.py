@@ -67,7 +67,11 @@ def load_user(id):
 ##################  INDEX  ##################
 @app.route('/')
 def index():
-    return render_template('index.html')
+
+    dyn = dynamo.dynamoOps()
+    positivePosts = dyn.getPositivePosts()
+
+    return render_template('index.html', positives=positivePosts)
 
 ##################  Journal  ##################
 @app.route('/journal', methods=['GET', 'POST'])
@@ -81,7 +85,7 @@ def journal():
         hodClient = HODClient(hpeID)
         parser = HODResponseParser()
 
-        sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser)
+        sentiments = SentimentAnalysis.SentimentAnalysis(hodClient, parser,orig_text=request.form['journal_text'])
         concepts = ConceptExtractor.ConceptExtractor(hodClient, parser)
 
         text_to_analyze = request.form['journal_text']
@@ -101,10 +105,13 @@ def journal():
         flag_for_review = True
 
         ts = time.time()
-        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%d/%m/%Y_%H:%M:%S')
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%d-%m-%Y_%H-%M-%S')
+
+        dyn = dynamo.dynamoOps()
+        positivePosts = dyn.getPositivePosts()
 
         write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate, timestamp, '1234','dev')
-        return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review)
+        return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review, positives=positivePosts)
 
     # No data received
     else:

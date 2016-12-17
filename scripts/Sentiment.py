@@ -5,10 +5,11 @@ import boto
 
 class Sentiment(object):
 
-    def __init__(self, positive=[], negative=[], aggregate={}):
+    def __init__(self, positive=[], negative=[], aggregate={}, orig_text='Text'):
         self.positive = positive
         self.negative = negative
         self.aggregate = aggregate
+        self.orig_text = orig_text
 
     def understandSentiment(self, jsonResp):
         positiveList = []
@@ -36,9 +37,8 @@ class Sentiment(object):
         pass
 
     def writeToCSV(self):
-        combinedText = ''
         ts = time.time()
-        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%d/%m/%Y_%H:%M:%S')
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%d-%m-%Y_%H-%M-%S')
         sentiments_filename = 'Sentiments_' + timestamp + '_.csv'
         with open(sentiments_filename, 'w', newline="") as out_file:
             csv_w = csv.writer(out_file)
@@ -53,7 +53,6 @@ class Sentiment(object):
                                 pos['normalized_text'],
                                 str(pos['normalized_length']),
                                 timestamp])
-                combinedText += pos['original_text']
 
             for neg in self.negative:
                 csv_w.writerow([neg['sentiment'],
@@ -64,7 +63,6 @@ class Sentiment(object):
                                 neg['normalized_text'],
                                 str(neg['normalized_length']),
                                 timestamp])
-                combinedText += neg['original_text']
 
         self.send_to_s3(sentiments_filename,'Pleza_Sentiments')
         os.remove(sentiments_filename)
@@ -87,8 +85,8 @@ class Sentiment(object):
 
 
         entry['TimeStamp'] = timestamp
-        entry['Score'] = self.aggregate['score']
-        entry['Text'] = combinedText
+        entry['Score'] = int(self.aggregate['score'] * 100)
+        entry['Text'] = self.orig_text
 
         dyn.addEntry(entry)
 

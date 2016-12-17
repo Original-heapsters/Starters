@@ -36,22 +36,26 @@
             </div>
         </center>
         </div>
-
-        <!-- Side bar -->
-        <div class="float-right-area">
-        <div class="inner-right">
-
-            <div class="w3-card-4" style="width:50%;">
-            <header class="w3-container w3-blue">
-              <h1>I really love...</h1>
-            </header>
-            <div class="w3-container">
-                <h3>Some inspirational post about good things</h3>
+        {% if positives %}
+            <!-- Side bar -->
+            <div class="float-right-area">
+                <center>
+                    <div class="inner-right">
+                        <h1>Great times at Original Heapsters!</h1>
+                        {% for  pos in positives %}
+                            <div class="w3-card-4" style="width:50%;">
+                                <header class="w3-container w3-blue">
+                                  <p>{{ pos }}</p>
+                                </header>
+                                <div class="w3-container">
+                                    <p>{{ positives[pos] }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </center>
             </div>
-            </div>
-
-        </div>
-        </div>
+        {% endif %}
         {% else %}
             <center>
                 <h2>Please Login</h2>

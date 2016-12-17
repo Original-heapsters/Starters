@@ -37,36 +37,28 @@ class dynamoOps(object):
 
         table = self.setup()
 
-        pe = "TimeStamp,Text"
+        response = table.scan()
 
+        results = {}
+
+        for i in response['Items']:
+            if id.lower() in i['Text'].lower():
+                results[i['TimeStamp']] = i['Text']
+
+        return results
+
+    def getPositivePosts(self):
+        table = self.setup()
 
         response = table.scan()
 
         results = {}
 
         for i in response['Items']:
-            #print(i['Text'])
-            if id.lower() in i['Text'].lower():
+            if i['Score'] > 50:
                 results[i['TimeStamp']] = i['Text']
-                #print('FOUND IT')
-                #print(i['TimeStamp'])
-                #print(i['Text'])
+
         return results
-
-            #print(json.dumps(i, cls=DecimalEncoder))
-
-        #while 'LastEvaluatedKey' in response:
-        #    response = table.scan(
-        ##        ProjectionExpression=pe,
-        #        ExclusiveStartKey=response['LastEvaluatedKey']
-        #    )#
-
-         #   for i in response['Items']:
-         #       print(json.dumps(i, cls=DecimalEncoder))
-
-            #return response['Items']
-        #else:
-        #    return None
 
     def addEntry(self, Item):
         table = self.setup()

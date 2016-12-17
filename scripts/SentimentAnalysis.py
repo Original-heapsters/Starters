@@ -6,12 +6,13 @@ from havenondemand.hodresponseparser import *
 
 class SentimentAnalysis(object):
 
-    def __init__(self, hodClient=None, parser=None, results={}):
+    def __init__(self, hodClient=None, parser=None, results={}, orig_text='Text'):
         self.hodClient = hodClient
         self.parser = parser
         self.results = results
         self.d = {}
         self.aggregate = {}
+        self.orig_text = orig_text
 
     def sentimentRequestCompleted(self, response, **context):
         sentiment_dict = {}
@@ -19,16 +20,7 @@ class SentimentAnalysis(object):
         resp = "<br>"
         payloadObj = self.parser.parse_payload(response)
 
-
-
-
-
         pprint(payloadObj)
-
-
-
-
-
 
         if payloadObj is None:
             errorObj = self.parser.get_last_error()
@@ -38,7 +30,7 @@ class SentimentAnalysis(object):
                 resp += "Error code: %d Reason: %s Details: %s" % (err.error, err.reason, err.detail)
         else:
 
-            sentObj = Sentiment.Sentiment()
+            sentObj = Sentiment.Sentiment(orig_text=self.orig_text)
 
             sentObj.understandSentiment(payloadObj)
             sentObj.printObj()
@@ -108,6 +100,7 @@ class SentimentAnalysis(object):
         paramArr = {}
         #List of sentences
         paramArr["text"] = textToAnalyze
+        #self.orig_text = textToAnalyze
         # ex. 'eng'
         paramArr["lang"] = language
 
