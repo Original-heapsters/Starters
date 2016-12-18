@@ -61,16 +61,16 @@ td {
 .float-left-area {
     width: 70%;
     float: left;
+    padding-left:100px
+    padding-right:0px
 }
-.float-left-area{
-     padding:0px 40px 0px 5px
-}
+
 .float-right-area {
-    width: 30%;
+    height: 500px;
+    width: 340px;
+    overflow: auto;
     float: left;
-}
-.float-right-area{
-     padding:0px 40px 0px 5px
+    position: relative;
 }
 
 .inner-left {
