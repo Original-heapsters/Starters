@@ -80,8 +80,6 @@ def journal():
     #Received data
     if request.method == "POST":
 
-        sentiments = None
-        concepts = None
         hodClient = HODClient(hpeID)
         parser = HODResponseParser()
 
@@ -110,7 +108,7 @@ def journal():
         dyn = dynamo.dynamoOps()
         positivePosts = dyn.getPositivePosts()
 
-        write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate, timestamp, '1234','dev')
+        # write_json(request.form['journal_text'], sentiments.d, concepts.results, sentiments.aggregate, timestamp, '1234','dev')
         return render_template('journal.html', sentiments=sentiments, concepts=concepts, flag_for_review=flag_for_review, positives=positivePosts)
 
     # No data received
