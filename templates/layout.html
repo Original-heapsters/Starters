@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
   </head>
   <body>
-    <a class="w3-btn w3-blue" href="{{ url_for('index') }}">PLEZA</a>
+        <a href="{{ url_for('index') }}">
+            <img src="/static/Pleza_Icon.png" height="100px" alt="Is that all youve got?">
+        </a>
+        <!--<center><h1>WELCOME TO PLEZA!</h1></center>-->
         <ul class="topnav">
         {% if not current_user.is_authenticated %}
           <li class="right" ><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Login with Facebook</a></li>
@@ -14,9 +17,10 @@
           <li class="right" ><a  href="{{ url_for('logout') }}">Log out</a></li>
         {% endif %}
         </ul>
-      {% for message in get_flashed_messages() %}
-        <div class=flash>{{ message }}</div>
-      {% endfor %}
-      {% block body %}{% endblock %}
+        {% for message in get_flashed_messages() %}
+            <div class=flash>{{ message }}</div>
+        {% endfor %}
+        {% block body %}
+        {% endblock %}
   </body>
 </html>

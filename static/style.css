@@ -4,6 +4,20 @@ body {
     margin: 5px;
     padding: 10px;
 }
+
+.colorful {
+	background:
+		-webkit-linear-gradient(45deg, hsla(201, 96%, 47%, 1) 0%, hsla(201, 96%, 47%, 0) 70%),
+		-webkit-linear-gradient(315deg, hsla(337, 94%, 45%, 1) 10%, hsla(337, 94%, 45%, 0) 80%),
+		-webkit-linear-gradient(225deg, hsla(116, 92%, 43%, 1) 10%, hsla(116, 92%, 43%, 0) 80%),
+		-webkit-linear-gradient(135deg, hsla(10, 91%, 48%, 1) 100%, hsla(10, 91%, 48%, 0) 70%);
+	background:
+		linear-gradient(45deg, hsla(201, 96%, 47%, 1) 0%, hsla(201, 96%, 47%, 0) 70%),
+		linear-gradient(135deg, hsla(337, 94%, 45%, 1) 10%, hsla(337, 94%, 45%, 0) 80%),
+		linear-gradient(225deg, hsla(116, 92%, 43%, 1) 10%, hsla(116, 92%, 43%, 0) 80%),
+		linear-gradient(315deg, hsla(10, 91%, 48%, 1) 100%, hsla(10, 91%, 48%, 0) 70%);
+	}
+
 img {
     max-width: 100%;
     border-radius: 4px;
