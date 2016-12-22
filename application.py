@@ -120,17 +120,17 @@ def journal():
 ##################  FIND USER  ##################
 @app.route('/findphrase', methods=['GET', 'POST'])
 def findphrase():
+    dyn = dynamo.dynamoOps()
 
     # Received a search phrase
     if request.method == 'POST':
-        dyn = dynamo.dynamoOps()
         userdata = dyn.getUserByID(request.form['findphrase'])
-
-        return render_template('findphrase.html', userdata=userdata)
 
     # No search received
     else:
-        return render_template('findphrase.html')
+        userdata = dyn.getUserByID(None)
+
+    return render_template('findphrase.html', userdata=userdata)
 
 ##################  LOGOUT  ##################
 @app.route('/logout')

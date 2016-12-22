@@ -36,13 +36,15 @@ class dynamoOps(object):
     def getUserByID(self, id):
 
         table = self.setup()
-
         response = table.scan()
-
         results = {}
 
-        for i in response['Items']:
-            if id.lower() in i['Text'].lower():
+        if id:
+            for i in response['Items']:
+                if id.lower() in i['Text'].lower():
+                    results[i['TimeStamp']] = i['Text']
+        else:
+            for i in response['Items']:
                 results[i['TimeStamp']] = i['Text']
 
         return results
