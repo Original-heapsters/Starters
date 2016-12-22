@@ -6,22 +6,18 @@
             <center>
                 <div class="inner-left">
                     {% if userdata %}
-                        <div style="overflow-x:auto;">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>TimeStamp</th>
-                                        <th>Entry</th>
-                                    </tr>
-                                </thead>
-                                {% for entry in userdata %}
-                                    <tr>
-                                        <td>{{ entry }}</td>
-                                        <td>{{ userdata[entry ]}}</td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
+                        <h1>Entries in DB</h1>
+                        {% for  entry in userdata %}
+                            <br>
+                            <div class="w3-card-4" style="width:80%;">
+                                <header class="w3-container w3-blue">
+                                  <p>{{ entry }}</p>
+                                </header>
+                                <div class="w3-container" >
+                                    <p>{{ userdata[entry] }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
                     {% else %}
                         <h1>No entries found.</h1>
                         <img src="/static/psychiatrist.jpg" height="500px" alt="But how does it make you feeel?">
